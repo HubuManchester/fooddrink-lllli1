@@ -1,0 +1,10 @@
+namespace FoodLens.Models;
+
+public class MealPlan
+{
+    public int Id { get; set; }
+    public DateTime Date { get; set; }
+    public string MealType { get; set; } = "Lunch";
+    public int RecipeId { get; set; }
+    public Recipe? Recipe { get; set; }
+}

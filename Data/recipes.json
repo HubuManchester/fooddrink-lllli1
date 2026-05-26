@@ -1,0 +1,183 @@
+[
+  {
+    "Id": 1,
+    "Title": "Classic Pasta Carbonara",
+    "Description": "A creamy Italian pasta dish made with eggs, cheese, pancetta, and black pepper.",
+    "ImageUrl": "",
+    "Category": "Dinner",
+    "CookTimeMinutes": 20,
+    "PrepTimeMinutes": 10,
+    "Servings": 4,
+    "Difficulty": "Medium",
+    "Rating": 4.8,
+    "Calories": 450,
+    "IsFavorite": false,
+    "Instructions": [
+      "Bring a large pot of salted water to boil and cook spaghetti until al dente.",
+      "While pasta cooks, dice the pancetta and fry in a pan until crispy.",
+      "In a bowl, whisk together eggs, grated Pecorino Romano, and black pepper.",
+      "Drain pasta, reserving 1 cup of pasta water.",
+      "Add pasta to the pancetta pan, remove from heat, and pour in egg mixture.",
+      "Toss quickly, adding pasta water as needed for a creamy consistency.",
+      "Serve immediately with extra cheese and pepper."
+    ],
+    "Ingredients": [
+      { "Id": 1, "Name": "Spaghetti", "Quantity": 400, "Unit": "g" },
+      { "Id": 2, "Name": "Pancetta", "Quantity": 200, "Unit": "g" },
+      { "Id": 3, "Name": "Eggs", "Quantity": 4, "Unit": "whole" },
+      { "Id": 4, "Name": "Pecorino Romano", "Quantity": 100, "Unit": "g" },
+      { "Id": 5, "Name": "Black Pepper", "Quantity": 2, "Unit": "tsp" }
+    ]
+  },
+  {
+    "Id": 2,
+    "Title": "Avocado Toast with Poached Egg",
+    "Description": "A nutritious breakfast with creamy avocado, perfectly poached egg on sourdough bread.",
+    "ImageUrl": "",
+    "Category": "Breakfast",
+    "CookTimeMinutes": 10,
+    "PrepTimeMinutes": 5,
+    "Servings": 2,
+    "Difficulty": "Easy",
+    "Rating": 4.5,
+    "Calories": 320,
+    "IsFavorite": false,
+    "Instructions": [
+      "Toast the sourdough bread until golden brown.",
+      "Halve the avocado, remove pit, and mash with a fork.",
+      "Season avocado with salt, pepper, and lemon juice.",
+      "Bring water to a gentle simmer, add a splash of vinegar.",
+      "Create a whirlpool and gently drop in the egg.",
+      "Poach for 3-4 minutes until whites are set.",
+      "Spread avocado on toast, top with poached egg.",
+      "Season with salt, pepper, and red pepper flakes."
+    ],
+    "Ingredients": [
+      { "Id": 6, "Name": "Sourdough Bread", "Quantity": 2, "Unit": "slices" },
+      { "Id": 7, "Name": "Avocado", "Quantity": 1, "Unit": "whole" },
+      { "Id": 8, "Name": "Eggs", "Quantity": 2, "Unit": "whole" },
+      { "Id": 9, "Name": "Lemon Juice", "Quantity": 1, "Unit": "tbsp" },
+      { "Id": 10, "Name": "Red Pepper Flakes", "Quantity": 1, "Unit": "pinch" }
+    ]
+  },
+  {
+    "Id": 3,
+    "Title": "Chicken Stir Fry",
+    "Description": "A quick and healthy stir fry with tender chicken and fresh vegetables.",
+    "ImageUrl": "",
+    "Category": "Lunch",
+    "CookTimeMinutes": 15,
+    "PrepTimeMinutes": 10,
+    "Servings": 3,
+    "Difficulty": "Easy",
+    "Rating": 4.6,
+    "Calories": 380,
+    "IsFavorite": true,
+    "Instructions": [
+      "Slice chicken breast into thin strips.",
+      "Prepare vegetables: slice bell peppers, broccoli, and carrots.",
+      "Heat oil in a wok over high heat.",
+      "Stir fry chicken until golden, about 5 minutes.",
+      "Remove chicken, add vegetables and stir fry for 3 minutes.",
+      "Return chicken to wok, add soy sauce and oyster sauce.",
+      "Toss everything together for 2 minutes.",
+      "Serve over steamed rice."
+    ],
+    "Ingredients": [
+      { "Id": 11, "Name": "Chicken Breast", "Quantity": 500, "Unit": "g" },
+      { "Id": 12, "Name": "Bell Peppers", "Quantity": 2, "Unit": "whole" },
+      { "Id": 13, "Name": "Broccoli", "Quantity": 200, "Unit": "g" },
+      { "Id": 14, "Name": "Carrots", "Quantity": 2, "Unit": "whole" },
+      { "Id": 15, "Name": "Soy Sauce", "Quantity": 3, "Unit": "tbsp" },
+      { "Id": 16, "Name": "Oyster Sauce", "Quantity": 2, "Unit": "tbsp" }
+    ]
+  },
+  {
+    "Id": 4,
+    "Title": "Chocolate Lava Cake",
+    "Description": "A decadent dessert with a molten chocolate center that flows when you cut into it.",
+    "ImageUrl": "",
+    "Category": "Dessert",
+    "CookTimeMinutes": 14,
+    "PrepTimeMinutes": 15,
+    "Servings": 4,
+    "Difficulty": "Medium",
+    "Rating": 4.9,
+    "Calories": 520,
+    "IsFavorite": false,
+    "Instructions": [
+      "Preheat oven to 220°C (425°F). Butter and flour 4 ramekins.",
+      "Melt butter and chocolate together in a double boiler.",
+      "Whisk in sugar and a pinch of salt.",
+      "Add eggs one at a time, whisking well.",
+      "Fold in flour until just combined.",
+      "Divide batter among ramekins.",
+      "Bake for 12-14 minutes until edges are firm but center is soft.",
+      "Let cool 1 minute, then invert onto plates and serve immediately."
+    ],
+    "Ingredients": [
+      { "Id": 17, "Name": "Dark Chocolate", "Quantity": 200, "Unit": "g" },
+      { "Id": 18, "Name": "Butter", "Quantity": 100, "Unit": "g" },
+      { "Id": 19, "Name": "Sugar", "Quantity": 100, "Unit": "g" },
+      { "Id": 20, "Name": "Eggs", "Quantity": 2, "Unit": "whole" },
+      { "Id": 21, "Name": "Flour", "Quantity": 50, "Unit": "g" }
+    ]
+  },
+  {
+    "Id": 5,
+    "Title": "Fresh Berry Smoothie",
+    "Description": "A refreshing and healthy smoothie packed with mixed berries and yogurt.",
+    "ImageUrl": "",
+    "Category": "Drinks",
+    "CookTimeMinutes": 0,
+    "PrepTimeMinutes": 5,
+    "Servings": 2,
+    "Difficulty": "Easy",
+    "Rating": 4.3,
+    "Calories": 180,
+    "IsFavorite": false,
+    "Instructions": [
+      "Add frozen mixed berries to the blender.",
+      "Add Greek yogurt and a splash of milk.",
+      "Add honey for sweetness.",
+      "Blend on high until smooth and creamy.",
+      "Pour into glasses and serve immediately."
+    ],
+    "Ingredients": [
+      { "Id": 22, "Name": "Mixed Berries (frozen)", "Quantity": 300, "Unit": "g" },
+      { "Id": 23, "Name": "Greek Yogurt", "Quantity": 200, "Unit": "g" },
+      { "Id": 24, "Name": "Milk", "Quantity": 100, "Unit": "ml" },
+      { "Id": 25, "Name": "Honey", "Quantity": 2, "Unit": "tbsp" }
+    ]
+  },
+  {
+    "Id": 6,
+    "Title": "Grilled Salmon with Lemon",
+    "Description": "Perfectly grilled salmon fillet with a zesty lemon herb butter.",
+    "ImageUrl": "",
+    "Category": "Dinner",
+    "CookTimeMinutes": 15,
+    "PrepTimeMinutes": 10,
+    "Servings": 2,
+    "Difficulty": "Medium",
+    "Rating": 4.7,
+    "Calories": 420,
+    "IsFavorite": true,
+    "Instructions": [
+      "Season salmon fillets with salt and pepper.",
+      "Mix softened butter with lemon juice, garlic, and herbs.",
+      "Preheat grill to medium-high heat.",
+      "Place salmon skin-side down on the grill.",
+      "Cook for 6-7 minutes per side.",
+      "Top with lemon herb butter before serving.",
+      "Serve with steamed asparagus and rice."
+    ],
+    "Ingredients": [
+      { "Id": 26, "Name": "Salmon Fillets", "Quantity": 2, "Unit": "whole" },
+      { "Id": 27, "Name": "Butter", "Quantity": 50, "Unit": "g" },
+      { "Id": 28, "Name": "Lemon", "Quantity": 1, "Unit": "whole" },
+      { "Id": 29, "Name": "Garlic", "Quantity": 2, "Unit": "cloves" },
+      { "Id": 30, "Name": "Fresh Dill", "Quantity": 1, "Unit": "tbsp" }
+    ]
+  }
+]

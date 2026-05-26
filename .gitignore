@@ -1,0 +1,13 @@
+## .NET MAUI
+bin/
+obj/
+*.user
+*.suo
+*.cache
+*.log
+.vs/
+.idea/
+*.apk
+*.aab
+*.appx
+*.msix

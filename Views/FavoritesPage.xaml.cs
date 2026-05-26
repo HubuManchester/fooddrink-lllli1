@@ -1,0 +1,12 @@
+using FoodLens.ViewModels;
+
+namespace FoodLens.Views;
+
+public partial class FavoritesPage : ContentPage
+{
+    public FavoritesPage(FavoritesViewModel viewModel)
+    {
+        InitializeComponent();
+        BindingContext = viewModel;
+    }
+}

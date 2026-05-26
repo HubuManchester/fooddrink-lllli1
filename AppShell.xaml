@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="FoodLens.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:FoodLens.Views"
+    Title="FoodLens">
+
+    <Shell.FlyoutHeader>
+        <VerticalStackLayout Padding="20" BackgroundColor="#512BD4">
+            <Label Text="FoodLens"
+                   FontSize="28" FontAttributes="Bold"
+                   TextColor="White"
+                   HorizontalOptions="Center" />
+            <Label Text="Smart Recipe &amp; Meal Planner"
+                   FontSize="12" TextColor="#E0E0E0"
+                   HorizontalOptions="Center" Margin="0,4,0,0" />
+        </VerticalStackLayout>
+    </Shell.FlyoutHeader>
+
+    <FlyoutItem Title="Home" Icon="home.png">
+        <ShellContent ContentTemplate="{DataTemplate views:HomePage}" Route="home" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Categories" Icon="category.png">
+        <ShellContent ContentTemplate="{DataTemplate views:CategoryListPage}" Route="categories" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Search" Icon="search.png">
+        <ShellContent ContentTemplate="{DataTemplate views:SearchPage}" Route="search" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Favorites" Icon="favorites.png">
+        <ShellContent ContentTemplate="{DataTemplate views:FavoritesPage}" Route="favorites" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Meal Plan" Icon="calendar.png">
+        <ShellContent ContentTemplate="{DataTemplate views:MealPlanPage}" Route="mealplan" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Settings" Icon="settings.png">
+        <ShellContent ContentTemplate="{DataTemplate views:SettingsPage}" Route="settings" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Login" Icon="login.png">
+        <ShellContent ContentTemplate="{DataTemplate views:LoginPage}" Route="login" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="About" Icon="about.png">
+        <ShellContent ContentTemplate="{DataTemplate views:AboutPage}" Route="about" />
+    </FlyoutItem>
+
+</Shell>

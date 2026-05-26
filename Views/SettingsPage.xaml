@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FoodLens.Views.SettingsPage"
+             Title="Settings">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="20">
+            <Label Text="Settings"
+                   FontSize="24" FontAttributes="Bold"
+                   SemanticProperties.HeadingLevel="Level1" />
+
+            <Frame CornerRadius="12" Padding="16">
+                <VerticalStackLayout Spacing="16">
+                    <Label Text="Appearance" FontSize="18" FontAttributes="Bold"
+                           SemanticProperties.HeadingLevel="Level2" />
+                    <HorizontalStackLayout Spacing="12" VerticalOptions="Center">
+                        <Label Text="Dark Mode" VerticalOptions="Center" />
+                        <Switch x:Name="DarkModeSwitch"
+                                SemanticProperties.Description="Toggle dark mode"
+                                SemanticProperties.Hint="Switch between light and dark theme" />
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Frame>
+
+            <Frame CornerRadius="12" Padding="16">
+                <VerticalStackLayout Spacing="16">
+                    <Label Text="About" FontSize="18" FontAttributes="Bold"
+                           SemanticProperties.HeadingLevel="Level2" />
+                    <Label Text="FoodLens v1.0" TextColor="Gray" />
+                    <Label Text="Smart Recipe &amp; Meal Planner" TextColor="Gray" />
+                </VerticalStackLayout>
+            </Frame>
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

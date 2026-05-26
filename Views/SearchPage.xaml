@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:FoodLens.ViewModels"
+             x:Class="FoodLens.Views.SearchPage"
+             x:DataType="vm:SearchViewModel"
+             Title="Search">
+
+    <VerticalStackLayout Padding="16" Spacing="16">
+        <SearchBar Placeholder="Search recipes..."
+                   SearchCommand="{Binding SearchCommand}"
+                   Text="{Binding SearchKeyword}"
+                   SemanticProperties.Description="Search recipes by keyword"
+                   SemanticProperties.Hint="Enter a recipe name or ingredient to search" />
+
+        <HorizontalStackLayout Spacing="8">
+            <Button Text="All" Command="{Binding FilterByCategoryCommand}" CommandParameter="" />
+            <Button Text="Breakfast" Command="{Binding FilterByCategoryCommand}" CommandParameter="Breakfast" />
+            <Button Text="Lunch" Command="{Binding FilterByCategoryCommand}" CommandParameter="Lunch" />
+            <Button Text="Dinner" Command="{Binding FilterByCategoryCommand}" CommandParameter="Dinner" />
+            <Button Text="Dessert" Command="{Binding FilterByCategoryCommand}" CommandParameter="Dessert" />
+        </HorizontalStackLayout>
+
+        <CollectionView ItemsSource="{Binding SearchResults}"
+                        SemanticProperties.Description="Search results">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Margin="0,4" Padding="12" CornerRadius="8">
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="{Binding Title}" FontSize="16" FontAttributes="Bold" />
+                            <Label Text="{Binding Description}" LineBreakMode="TailTruncation" MaxLines="2" />
+                        </VerticalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Label Text="No recipes found. Try a different search."
+               IsVisible="{Binding IsEmpty}"
+               HorizontalOptions="Center"
+               TextColor="Gray"
+               SemanticProperties.Description="No search results found" />
+    </VerticalStackLayout>
+
+</ContentPage>

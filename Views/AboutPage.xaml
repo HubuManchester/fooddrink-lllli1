@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FoodLens.Views.AboutPage"
+             Title="About">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="30" Spacing="20" VerticalOptions="Center" HorizontalOptions="Center">
+            <Label Text="FoodLens"
+                   FontSize="36" FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   SemanticProperties.HeadingLevel="Level1" />
+
+            <Label Text="Smart Recipe &amp; Meal Planner"
+                   FontSize="18" TextColor="Gray"
+                   HorizontalOptions="Center" />
+
+            <Label Text="Version 1.0"
+                   FontSize="14" TextColor="Gray"
+                   HorizontalOptions="Center" />
+
+            <Label Text="FoodLens helps you discover delicious recipes, plan your meals, and make the most of your ingredients with smart recognition."
+                   FontSize="16" HorizontalOptions="Center" HorizontalTextAlignment="Center"
+                   Margin="0,20,0,0" />
+
+            <Label Text="Built with .NET MAUI"
+                   FontSize="14" TextColor="#512BD4"
+                   HorizontalOptions="Center" Margin="0,20,0,0" />
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
