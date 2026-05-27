@@ -5,17 +5,21 @@
              Title="Settings">
 
     <ScrollView>
-        <VerticalStackLayout Padding="16" Spacing="20">
-            <Label Text="Settings"
-                   FontSize="24" FontAttributes="Bold"
-                   SemanticProperties.HeadingLevel="Level1" />
+        <VerticalStackLayout Padding="{StaticResource PaddingPage}" Spacing="{StaticResource SpacingMedium}">
 
-            <Frame CornerRadius="12" Padding="16">
-                <VerticalStackLayout Spacing="16">
-                    <Label Text="Appearance" FontSize="18" FontAttributes="Bold"
-                           SemanticProperties.HeadingLevel="Level2" />
-                    <HorizontalStackLayout Spacing="12" VerticalOptions="Center">
-                        <Label Text="Dark Mode" VerticalOptions="Center" />
+            <Label Text="Settings"
+                   Style="{StaticResource LabelSectionHeader}" />
+
+            <Frame Style="{StaticResource CardFrame}">
+                <VerticalStackLayout Spacing="20">
+                    <Label Text="Appearance"
+                           Style="{StaticResource LabelLarge}" />
+
+                    <HorizontalStackLayout Spacing="16" VerticalOptions="Center">
+                        <Label Text="Dark Mode"
+                               Style="{StaticResource LabelMedium}"
+                               VerticalOptions="Center"
+                               HorizontalOptions="FillAndExpand" />
                         <Switch x:Name="DarkModeSwitch"
                                 SemanticProperties.Description="Toggle dark mode"
                                 SemanticProperties.Hint="Switch between light and dark theme" />
@@ -23,14 +27,15 @@
                 </VerticalStackLayout>
             </Frame>
 
-            <Frame CornerRadius="12" Padding="16">
-                <VerticalStackLayout Spacing="16">
-                    <Label Text="About" FontSize="18" FontAttributes="Bold"
-                           SemanticProperties.HeadingLevel="Level2" />
-                    <Label Text="FoodLens v1.0" TextColor="Gray" />
-                    <Label Text="Smart Recipe &amp; Meal Planner" TextColor="Gray" />
+            <Frame Style="{StaticResource CardFrame}">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="About"
+                           Style="{StaticResource LabelLarge}" />
+                    <Label Text="FoodLens v1.0" Style="{StaticResource LabelBody}" />
+                    <Label Text="Smart Recipe &amp; Meal Planner" Style="{StaticResource LabelCaption}" />
                 </VerticalStackLayout>
             </Frame>
+
         </VerticalStackLayout>
     </ScrollView>
 

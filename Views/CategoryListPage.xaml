@@ -2,29 +2,33 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:FoodLens.ViewModels"
+             xmlns:models="clr-namespace:FoodLens.Models"
+             xmlns:controls="clr-namespace:FoodLens.Controls"
              x:Class="FoodLens.Views.CategoryListPage"
              x:DataType="vm:CategoryListViewModel"
              Title="Categories">
 
-    <CollectionView ItemsSource="{Binding Categories}"
-                    Margin="16"
-                    SemanticProperties.Description="Recipe categories">
-        <CollectionView.ItemsLayout>
-            <GridItemsLayout Orientation="Vertical" Span="2" HorizontalItemSpacing="12" VerticalItemSpacing="12" />
-        </CollectionView.ItemsLayout>
-        <CollectionView.ItemTemplate>
-            <DataTemplate>
-                <Frame CornerRadius="12" Padding="16" HeightRequest="100"
-                       BackgroundColor="{Binding Color}"
-                       SemanticProperties.Description="{Binding Name}">
-                    <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
-                        <Label Text="{Binding Icon}" FontSize="32" HorizontalOptions="Center" />
-                        <Label Text="{Binding Name}" FontSize="16" FontAttributes="Bold"
-                               TextColor="White" HorizontalOptions="Center" Margin="0,8,0,0" />
-                    </VerticalStackLayout>
-                </Frame>
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>
+    <VerticalStackLayout Padding="{StaticResource PaddingPage}" Spacing="{StaticResource SpacingMedium}">
+        <Label Text="Browse Categories"
+               Style="{StaticResource LabelSectionHeader}" />
+
+        <CollectionView ItemsSource="{Binding Categories}"
+                        SemanticProperties.Description="Recipe categories">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical" Span="2"
+                                 HorizontalItemSpacing="12"
+                                 VerticalItemSpacing="12" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Category">
+                    <controls:CategoryChipView
+                        CategoryName="{Binding Name}"
+                        ChipIcon="{Binding Icon}"
+                        ChipColor="{Binding Color}"
+                        HeightRequest="80" />
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </VerticalStackLayout>
 
 </ContentPage>

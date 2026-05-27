@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:FoodLens.Models"
+             x:Class="FoodLens.Controls.RecipeCardView"
+             x:Name="This">
+
+    <Frame Style="{StaticResource CardFrame}"
+           Margin="0,6"
+           Padding="0"
+           HeightRequest="180">
+        <Frame.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding Source={x:Reference This}, Path=TapCommand}"
+                                  CommandParameter="{Binding Source={x:Reference This}, Path=RecipeId}" />
+        </Frame.GestureRecognizers>
+
+        <Grid RowDefinitions="Auto,*,Auto" ColumnDefinitions="*,Auto"
+              Padding="16" RowSpacing="4">
+
+            <Label Grid.Row="0" Grid.Column="0"
+                   Text="{Binding Source={x:Reference This}, Path=RecipeTitle}"
+                   Style="{StaticResource LabelLarge}"
+                   LineBreakMode="TailTruncation"
+                   MaximumHeightRequest="52" />
+
+            <Image Grid.Row="0" Grid.Column="1"
+                   Source="{Binding Source={x:Reference This}, Path=FavoriteIcon}"
+                   WidthRequest="24" HeightRequest="24"
+                   VerticalOptions="Start">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding Source={x:Reference This}, Path=FavoriteCommand}"
+                                          CommandParameter="{Binding Source={x:Reference This}, Path=RecipeId}" />
+                </Image.GestureRecognizers>
+            </Image>
+
+            <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                   Text="{Binding Source={x:Reference This}, Path=RecipeDescription}"
+                   Style="{StaticResource LabelBody}"
+                   LineBreakMode="TailTruncation"
+                   MaxLines="2"
+                   VerticalOptions="Start" />
+
+            <HorizontalStackLayout Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                                   Spacing="16" VerticalOptions="End">
+                <HorizontalStackLayout Spacing="4">
+                    <Image Source="clock_icon.png" WidthRequest="14" HeightRequest="14"
+                           VerticalOptions="Center" />
+                    <Label Text="{Binding Source={x:Reference This}, Path=CookTime, StringFormat='{0} min'}"
+                           Style="{StaticResource LabelSmall}" VerticalOptions="Center" />
+                </HorizontalStackLayout>
+
+                <Label Text="{Binding Source={x:Reference This}, Path=Difficulty}"
+                       Style="{StaticResource LabelSmall}" VerticalOptions="Center" />
+
+                <Label Text="{Binding Source={x:Reference This}, Path=Calories, StringFormat='{0} cal'}"
+                       Style="{StaticResource LabelSmall}" VerticalOptions="Center" />
+
+                <Label Text="{Binding Source={x:Reference This}, Path=Category}"
+                       Style="{StaticResource LabelCaption}"
+                       TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryLight}}"
+                       VerticalOptions="Center" />
+            </HorizontalStackLayout>
+
+        </Grid>
+    </Frame>
+
+</ContentView>

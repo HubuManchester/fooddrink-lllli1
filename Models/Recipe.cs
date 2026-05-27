@@ -1,3 +1,6 @@
+using SQLite;
+using System.Text.Json;
+
 namespace FoodLens.Models;
 
 public class Recipe
@@ -15,6 +18,22 @@ public class Recipe
     public int Calories { get; set; }
     public bool IsFavorite { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.Now;
-    public List<string> Instructions { get; set; } = new();
-    public List<Ingredient> Ingredients { get; set; } = new();
+
+    public string InstructionsJson { get; set; } = "[]";
+
+    [Ignore]
+    public List<string> Instructions
+    {
+        get => JsonSerializer.Deserialize<List<string>>(InstructionsJson) ?? new();
+        set => InstructionsJson = JsonSerializer.Serialize(value);
+    }
+
+    public string IngredientsJson { get; set; } = "[]";
+
+    [Ignore]
+    public List<Ingredient> Ingredients
+    {
+        get => JsonSerializer.Deserialize<List<Ingredient>>(IngredientsJson) ?? new();
+        set => IngredientsJson = JsonSerializer.Serialize(value);
+    }
 }

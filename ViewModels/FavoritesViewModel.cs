@@ -16,6 +16,9 @@ public partial class FavoritesViewModel : BaseViewModel
     [ObservableProperty]
     private bool isRefreshing;
 
+    [ObservableProperty]
+    private bool isEmpty = true;
+
     public FavoritesViewModel(IDataService dataService)
     {
         _dataService = dataService;
@@ -31,6 +34,7 @@ public partial class FavoritesViewModel : BaseViewModel
         {
             var favorites = await _dataService.GetFavoriteRecipesAsync();
             FavoriteRecipes = new ObservableCollection<Recipe>(favorites);
+            IsEmpty = FavoriteRecipes.Count == 0;
         }
         finally
         {

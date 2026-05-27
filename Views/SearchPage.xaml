@@ -2,35 +2,48 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:FoodLens.ViewModels"
+             xmlns:models="clr-namespace:FoodLens.Models"
+             xmlns:controls="clr-namespace:FoodLens.Controls"
              x:Class="FoodLens.Views.SearchPage"
              x:DataType="vm:SearchViewModel"
              Title="Search">
 
-    <VerticalStackLayout Padding="16" Spacing="16">
+    <VerticalStackLayout Padding="{StaticResource PaddingPage}" Spacing="{StaticResource SpacingMedium}">
+
         <SearchBar Placeholder="Search recipes..."
                    SearchCommand="{Binding SearchCommand}"
                    Text="{Binding SearchKeyword}"
                    SemanticProperties.Description="Search recipes by keyword"
                    SemanticProperties.Hint="Enter a recipe name or ingredient to search" />
 
-        <HorizontalStackLayout Spacing="8">
-            <Button Text="All" Command="{Binding FilterByCategoryCommand}" CommandParameter="" />
-            <Button Text="Breakfast" Command="{Binding FilterByCategoryCommand}" CommandParameter="Breakfast" />
-            <Button Text="Lunch" Command="{Binding FilterByCategoryCommand}" CommandParameter="Lunch" />
-            <Button Text="Dinner" Command="{Binding FilterByCategoryCommand}" CommandParameter="Dinner" />
-            <Button Text="Dessert" Command="{Binding FilterByCategoryCommand}" CommandParameter="Dessert" />
-        </HorizontalStackLayout>
+        <ScrollView Orientation="Horizontal">
+            <HorizontalStackLayout Spacing="8">
+                <Button Text="All" Command="{Binding FilterByCategoryCommand}" CommandParameter=""
+                        Style="{StaticResource ButtonChip}" />
+                <Button Text="Breakfast" Command="{Binding FilterByCategoryCommand}" CommandParameter="Breakfast"
+                        Style="{StaticResource ButtonChip}" />
+                <Button Text="Lunch" Command="{Binding FilterByCategoryCommand}" CommandParameter="Lunch"
+                        Style="{StaticResource ButtonChip}" />
+                <Button Text="Dinner" Command="{Binding FilterByCategoryCommand}" CommandParameter="Dinner"
+                        Style="{StaticResource ButtonChip}" />
+                <Button Text="Dessert" Command="{Binding FilterByCategoryCommand}" CommandParameter="Dessert"
+                        Style="{StaticResource ButtonChip}" />
+            </HorizontalStackLayout>
+        </ScrollView>
 
         <CollectionView ItemsSource="{Binding SearchResults}"
                         SemanticProperties.Description="Search results">
             <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Frame Margin="0,4" Padding="12" CornerRadius="8">
-                        <VerticalStackLayout Spacing="4">
-                            <Label Text="{Binding Title}" FontSize="16" FontAttributes="Bold" />
-                            <Label Text="{Binding Description}" LineBreakMode="TailTruncation" MaxLines="2" />
-                        </VerticalStackLayout>
-                    </Frame>
+                <DataTemplate x:DataType="models:Recipe">
+                    <controls:RecipeCardView
+                        RecipeId="{Binding Id}"
+                        RecipeTitle="{Binding Title}"
+                        RecipeDescription="{Binding Description}"
+                        CookTime="{Binding CookTimeMinutes}"
+                        Difficulty="{Binding Difficulty}"
+                        Calories="{Binding Calories}"
+                        Category="{Binding Category}"
+                        IsFavorite="{Binding IsFavorite}" />
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
@@ -38,8 +51,10 @@
         <Label Text="No recipes found. Try a different search."
                IsVisible="{Binding IsEmpty}"
                HorizontalOptions="Center"
-               TextColor="Gray"
+               Style="{StaticResource LabelBody}"
+               TextColor="{AppThemeBinding Light={StaticResource TextSecondary}, Dark={StaticResource Gray300}}"
                SemanticProperties.Description="No search results found" />
+
     </VerticalStackLayout>
 
 </ContentPage>

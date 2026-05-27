@@ -26,6 +26,15 @@ public class DataService : IDataService
 
     private async Task LoadSeedDataAsync()
     {
+        _categories = new List<Category>
+        {
+            new() { Id = 1, Name = "Breakfast", Icon = "\U0001F373", Color = "#FF9800" },
+            new() { Id = 2, Name = "Lunch", Icon = "\U0001F957", Color = "#4CAF50" },
+            new() { Id = 3, Name = "Dinner", Icon = "\U0001F356", Color = "#F44336" },
+            new() { Id = 4, Name = "Dessert", Icon = "\U0001F370", Color = "#E91E63" },
+            new() { Id = 5, Name = "Drinks", Icon = "\U0001F379", Color = "#2196F3" }
+        };
+
         var existingCount = await _database!.Table<Recipe>().CountAsync();
         if (existingCount > 0)
         {
@@ -96,14 +105,6 @@ public class DataService : IDataService
             await _database.InsertAsync(recipe);
         }
 
-        _categories = new List<Category>
-        {
-            new() { Id = 1, Name = "Breakfast", Icon = "\U0001F373", Color = "#FF9800" },
-            new() { Id = 2, Name = "Lunch", Icon = "\U0001F957", Color = "#4CAF50" },
-            new() { Id = 3, Name = "Dinner", Icon = "\U0001F356", Color = "#F44336" },
-            new() { Id = 4, Name = "Dessert", Icon = "\U0001F370", Color = "#E91E63" },
-            new() { Id = 5, Name = "Drinks", Icon = "\U0001F379", Color = "#2196F3" }
-        };
     }
 
     public async Task<List<Recipe>> GetRecipesAsync()
@@ -165,7 +166,8 @@ public class DataService : IDataService
     public async Task<List<MealPlan>> GetMealPlansAsync(DateTime date)
     {
         await InitializeAsync();
-        var plans = await _database!.Table<MealPlan>().Where(m => m.Date.Date == date.Date).ToListAsync();
+        var allPlans = await _database!.Table<MealPlan>().ToListAsync();
+        var plans = allPlans.Where(m => m.Date.Date == date.Date).ToList();
         foreach (var plan in plans)
         {
             plan.Recipe = await _database.Table<Recipe>().FirstOrDefaultAsync(r => r.Id == plan.RecipeId);

@@ -23,6 +23,17 @@ public static class MauiProgram
         builder.Services.AddSingleton<ILocationService, LocationService>();
         builder.Services.AddSingleton<IVisionService, VisionService>();
 
+        builder.Services.AddTransient<Views.HomePage>();
+        builder.Services.AddTransient<Views.CategoryListPage>();
+        builder.Services.AddTransient<Views.RecipeDetailPage>();
+        builder.Services.AddTransient<Views.SearchPage>();
+        builder.Services.AddTransient<Views.FavoritesPage>();
+        builder.Services.AddTransient<Views.MealPlanPage>();
+        builder.Services.AddTransient<Views.SettingsPage>();
+        builder.Services.AddTransient<Views.LoginPage>();
+        builder.Services.AddTransient<Views.RegisterPage>();
+        builder.Services.AddTransient<Views.AboutPage>();
+
         builder.Services.AddTransient<ViewModels.HomePageViewModel>();
         builder.Services.AddTransient<ViewModels.CategoryListViewModel>();
         builder.Services.AddTransient<ViewModels.RecipeDetailViewModel>();

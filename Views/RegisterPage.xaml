@@ -4,53 +4,63 @@
              xmlns:vm="clr-namespace:FoodLens.ViewModels"
              x:Class="FoodLens.Views.RegisterPage"
              x:DataType="vm:RegisterViewModel"
-             Title="Register">
+             Title="Register"
+             Shell.NavBarIsVisible="False">
 
     <ScrollView>
-        <VerticalStackLayout Padding="30" Spacing="20" VerticalOptions="Center">
+        <VerticalStackLayout Padding="32" Spacing="24" VerticalOptions="Center">
+
             <Label Text="Create Account"
-                   FontSize="28" FontAttributes="Bold"
+                   Style="{StaticResource LabelTitle}"
                    HorizontalOptions="Center"
-                   SemanticProperties.HeadingLevel="Level1" />
+                   TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryLight}}" />
 
-            <Entry Placeholder="Display Name"
-                   Text="{Binding DisplayName}"
-                   SemanticProperties.Description="Display name"
-                   SemanticProperties.Hint="Enter your display name" />
+            <Frame Style="{StaticResource CardFrame}">
+                <VerticalStackLayout Spacing="16">
+                    <Entry Placeholder="Display Name"
+                           Text="{Binding DisplayName}"
+                           SemanticProperties.Description="Display name"
+                           SemanticProperties.Hint="Enter your display name" />
 
-            <Entry Placeholder="Email"
-                   Keyboard="Email"
-                   Text="{Binding Email}"
-                   SemanticProperties.Description="Email address"
-                   SemanticProperties.Hint="Enter your email address" />
+                    <Entry Placeholder="Email"
+                           Keyboard="Email"
+                           Text="{Binding Email}"
+                           SemanticProperties.Description="Email address"
+                           SemanticProperties.Hint="Enter your email address" />
 
-            <Entry Placeholder="Password"
-                   IsPassword="True"
-                   Text="{Binding Password}"
-                   SemanticProperties.Description="Password"
-                   SemanticProperties.Hint="Enter a password (minimum 6 characters)" />
+                    <Entry Placeholder="Password"
+                           IsPassword="True"
+                           Text="{Binding Password}"
+                           SemanticProperties.Description="Password"
+                           SemanticProperties.Hint="Enter a password (minimum 6 characters)" />
 
-            <Entry Placeholder="Confirm Password"
-                   IsPassword="True"
-                   Text="{Binding ConfirmPassword}"
-                   SemanticProperties.Description="Confirm password"
-                   SemanticProperties.Hint="Re-enter your password to confirm" />
+                    <Entry Placeholder="Confirm Password"
+                           IsPassword="True"
+                           Text="{Binding ConfirmPassword}"
+                           SemanticProperties.Description="Confirm password"
+                           SemanticProperties.Hint="Re-enter your password to confirm" />
 
-            <Label Text="{Binding ErrorMessage}"
-                   TextColor="Red" FontSize="12"
-                   IsVisible="{Binding HasError}"
-                   SemanticProperties.Description="Registration error message" />
+                    <Label Text="{Binding ErrorMessage}"
+                           TextColor="{StaticResource Danger}"
+                           FontSize="12"
+                           IsVisible="{Binding HasError}"
+                           SemanticProperties.Description="Registration error message" />
 
-            <Button Text="Register"
-                    Command="{Binding RegisterCommand}"
-                    SemanticProperties.Hint="Create your account" />
+                    <Button Text="Register"
+                            Command="{Binding RegisterCommand}"
+                            SemanticProperties.Hint="Create your account" />
+                </VerticalStackLayout>
+            </Frame>
 
             <Label Text="Already have an account? Login"
-                   HorizontalOptions="Center" TextColor="#512BD4">
+                   HorizontalOptions="Center"
+                   Style="{StaticResource LabelMedium}"
+                   TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryLight}}">
                 <Label.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding GoToLoginCommand}" />
                 </Label.GestureRecognizers>
             </Label>
+
         </VerticalStackLayout>
     </ScrollView>
 

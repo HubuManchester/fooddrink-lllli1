@@ -4,46 +4,58 @@
              xmlns:vm="clr-namespace:FoodLens.ViewModels"
              x:Class="FoodLens.Views.LoginPage"
              x:DataType="vm:LoginViewModel"
-             Title="Login">
+             Title="Login"
+             Shell.NavBarIsVisible="False">
 
     <ScrollView>
-        <VerticalStackLayout Padding="30" Spacing="20" VerticalOptions="Center">
-            <Label Text="FoodLens"
-                   FontSize="36" FontAttributes="Bold"
-                   HorizontalOptions="Center"
-                   SemanticProperties.HeadingLevel="Level1" />
+        <VerticalStackLayout Padding="32" Spacing="24" VerticalOptions="Center">
 
-            <Label Text="Sign in to your account"
-                   FontSize="16" TextColor="Gray"
-                   HorizontalOptions="Center" />
+            <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
+                <Label Text="FoodLens"
+                       Style="{StaticResource LabelDisplay}"
+                       TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryLight}}"
+                       HorizontalOptions="Center" />
 
-            <Entry Placeholder="Email"
-                   Keyboard="Email"
-                   Text="{Binding Email}"
-                   SemanticProperties.Description="Email address"
-                   SemanticProperties.Hint="Enter your email address" />
+                <Label Text="Sign in to your account"
+                       Style="{StaticResource LabelBody}"
+                       HorizontalOptions="Center" />
+            </VerticalStackLayout>
 
-            <Entry Placeholder="Password"
-                   IsPassword="True"
-                   Text="{Binding Password}"
-                   SemanticProperties.Description="Password"
-                   SemanticProperties.Hint="Enter your password" />
+            <Frame Style="{StaticResource CardFrame}" Margin="0,8,0,0">
+                <VerticalStackLayout Spacing="16">
+                    <Entry Placeholder="Email"
+                           Keyboard="Email"
+                           Text="{Binding Email}"
+                           SemanticProperties.Description="Email address"
+                           SemanticProperties.Hint="Enter your email address" />
 
-            <Label Text="{Binding ErrorMessage}"
-                   TextColor="Red" FontSize="12"
-                   IsVisible="{Binding HasError}"
-                   SemanticProperties.Description="Login error message" />
+                    <Entry Placeholder="Password"
+                           IsPassword="True"
+                           Text="{Binding Password}"
+                           SemanticProperties.Description="Password"
+                           SemanticProperties.Hint="Enter your password" />
 
-            <Button Text="Login"
-                    Command="{Binding LoginCommand}"
-                    SemanticProperties.Hint="Sign in to your account" />
+                    <Label Text="{Binding ErrorMessage}"
+                           TextColor="{StaticResource Danger}"
+                           FontSize="12"
+                           IsVisible="{Binding HasError}"
+                           SemanticProperties.Description="Login error message" />
+
+                    <Button Text="Login"
+                            Command="{Binding LoginCommand}"
+                            SemanticProperties.Hint="Sign in to your account" />
+                </VerticalStackLayout>
+            </Frame>
 
             <Label Text="Don't have an account? Register"
-                   HorizontalOptions="Center" TextColor="#512BD4">
+                   HorizontalOptions="Center"
+                   Style="{StaticResource LabelMedium}"
+                   TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryLight}}">
                 <Label.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding GoToRegisterCommand}" />
                 </Label.GestureRecognizers>
             </Label>
+
         </VerticalStackLayout>
     </ScrollView>
 
