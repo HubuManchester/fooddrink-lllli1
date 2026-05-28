@@ -9,6 +9,7 @@ namespace FoodLens.ViewModels;
 public partial class SearchViewModel : BaseViewModel
 {
     private readonly IDataService _dataService;
+    private CancellationTokenSource? _searchCts;
 
     [ObservableProperty]
     private string searchKeyword = string.Empty;
@@ -23,6 +24,30 @@ public partial class SearchViewModel : BaseViewModel
     {
         _dataService = dataService;
         Title = "Search";
+    }
+
+    partial void OnSearchKeywordChanged(string value)
+    {
+        _searchCts?.Cancel();
+        _searchCts = new CancellationTokenSource();
+        _ = DebouncedSearchAsync(_searchCts.Token);
+    }
+
+    private async Task DebouncedSearchAsync(CancellationToken token)
+    {
+        try
+        {
+            await Task.Delay(300, token);
+        }
+        catch (TaskCanceledException)
+        {
+            return;
+        }
+
+        await MainThread.InvokeOnMainThreadAsync(async () =>
+        {
+            await SearchAsync();
+        });
     }
 
     [RelayCommand]

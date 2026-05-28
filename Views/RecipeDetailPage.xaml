@@ -8,114 +8,131 @@
              x:DataType="vm:RecipeDetailViewModel"
              Title="{Binding Recipe.Title}">
 
-    <ScrollView>
-        <VerticalStackLayout Padding="{StaticResource PaddingPage}" Spacing="{StaticResource SpacingLarge}">
+    <Grid RowDefinitions="*,Auto">
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout Padding="{StaticResource PaddingPage}" Spacing="{StaticResource SpacingLarge}">
 
-            <Frame Style="{StaticResource CardFrame}">
-                <VerticalStackLayout Spacing="12">
-                    <Label Text="{Binding Recipe.Title}"
-                           Style="{StaticResource LabelTitle}" />
+                <Frame Style="{StaticResource CardFrame}">
+                    <VerticalStackLayout Spacing="12">
+                        <Label Text="{Binding Recipe.Title}"
+                               Style="{StaticResource LabelTitle}"
+                               SemanticProperties.HeadingLevel="Level1" />
 
-                    <controls:RatingStarView Rating="{Binding Recipe.Rating}"
-                                             HorizontalOptions="Start" />
+                        <controls:RatingStarView Rating="{Binding Recipe.Rating}"
+                                                 HorizontalOptions="Start"
+                                                 SemanticProperties.Description="Recipe rating" />
 
-                    <Label Text="{Binding Recipe.Description}"
-                           Style="{StaticResource LabelBody}"
-                           LineBreakMode="WordWrap" />
+                        <Label Text="{Binding Recipe.Description}"
+                               Style="{StaticResource LabelBody}"
+                               LineBreakMode="WordWrap" />
+                    </VerticalStackLayout>
+                </Frame>
+
+                <Frame Style="{StaticResource CardFrameFlat}"
+                       BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}">
+                    <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*,*,*,*"
+                          RowSpacing="4">
+                        <VerticalStackLayout Grid.Column="0" HorizontalOptions="Center" Spacing="2">
+                            <Label Text="Prep" Style="{StaticResource LabelCaption}" HorizontalOptions="Center" />
+                            <Label Text="{Binding Recipe.PrepTimeMinutes, StringFormat='{0} min'}"
+                                   Style="{StaticResource LabelMedium}"
+                                   FontAttributes="Bold"
+                                   HorizontalOptions="Center" />
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center" Spacing="2">
+                            <Label Text="Cook" Style="{StaticResource LabelCaption}" HorizontalOptions="Center" />
+                            <Label Text="{Binding Recipe.CookTimeMinutes, StringFormat='{0} min'}"
+                                   Style="{StaticResource LabelMedium}"
+                                   FontAttributes="Bold"
+                                   HorizontalOptions="Center" />
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center" Spacing="2">
+                            <Label Text="Servings" Style="{StaticResource LabelCaption}" HorizontalOptions="Center" />
+                            <Label Text="{Binding Recipe.Servings}"
+                                   Style="{StaticResource LabelMedium}"
+                                   FontAttributes="Bold"
+                                   HorizontalOptions="Center" />
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Column="3" HorizontalOptions="Center" Spacing="2">
+                            <Label Text="Calories" Style="{StaticResource LabelCaption}" HorizontalOptions="Center" />
+                            <Label Text="{Binding Recipe.Calories, StringFormat='{0} cal'}"
+                                   Style="{StaticResource LabelMedium}"
+                                   FontAttributes="Bold"
+                                   HorizontalOptions="Center" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </Frame>
+
+                <VerticalStackLayout Spacing="{StaticResource SpacingSmall}">
+                    <Label Text="Ingredients"
+                           Style="{StaticResource LabelSectionHeader}"
+                           SemanticProperties.HeadingLevel="Level2" />
+
+                    <Frame Style="{StaticResource CardFrameFlat}">
+                        <CollectionView ItemsSource="{Binding Recipe.Ingredients}"
+                                        AutomationId="IngredientsList"
+                                        SemanticProperties.Description="Ingredients list">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="models:Ingredient">
+                                    <HorizontalStackLayout Spacing="8" Margin="0,4">
+                                        <Label Text="-" Style="{StaticResource LabelMedium}"
+                                               TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryLight}}" />
+                                        <Label Text="{Binding Name}" Style="{StaticResource LabelMedium}" />
+                                        <Label Text="{Binding Quantity}" Style="{StaticResource LabelSmall}" />
+                                        <Label Text="{Binding Unit}" Style="{StaticResource LabelSmall}" />
+                                    </HorizontalStackLayout>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </Frame>
                 </VerticalStackLayout>
-            </Frame>
 
-            <Frame Style="{StaticResource CardFrameFlat}"
-                   BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}">
-                <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*,*,*,*"
-                      RowSpacing="4">
-                    <VerticalStackLayout Grid.Column="0" HorizontalOptions="Center" Spacing="2">
-                        <Label Text="Prep" Style="{StaticResource LabelCaption}" HorizontalOptions="Center" />
-                        <Label Text="{Binding Recipe.PrepTimeMinutes, StringFormat='{0} min'}"
-                               Style="{StaticResource LabelMedium}"
-                               FontAttributes="Bold"
-                               HorizontalOptions="Center" />
-                    </VerticalStackLayout>
-                    <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center" Spacing="2">
-                        <Label Text="Cook" Style="{StaticResource LabelCaption}" HorizontalOptions="Center" />
-                        <Label Text="{Binding Recipe.CookTimeMinutes, StringFormat='{0} min'}"
-                               Style="{StaticResource LabelMedium}"
-                               FontAttributes="Bold"
-                               HorizontalOptions="Center" />
-                    </VerticalStackLayout>
-                    <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center" Spacing="2">
-                        <Label Text="Servings" Style="{StaticResource LabelCaption}" HorizontalOptions="Center" />
-                        <Label Text="{Binding Recipe.Servings}"
-                               Style="{StaticResource LabelMedium}"
-                               FontAttributes="Bold"
-                               HorizontalOptions="Center" />
-                    </VerticalStackLayout>
-                    <VerticalStackLayout Grid.Column="3" HorizontalOptions="Center" Spacing="2">
-                        <Label Text="Calories" Style="{StaticResource LabelCaption}" HorizontalOptions="Center" />
-                        <Label Text="{Binding Recipe.Calories, StringFormat='{0} cal'}"
-                               Style="{StaticResource LabelMedium}"
-                               FontAttributes="Bold"
-                               HorizontalOptions="Center" />
-                    </VerticalStackLayout>
-                </Grid>
-            </Frame>
+                <VerticalStackLayout Spacing="{StaticResource SpacingSmall}">
+                    <Label Text="Instructions"
+                           Style="{StaticResource LabelSectionHeader}"
+                           SemanticProperties.HeadingLevel="Level2" />
 
-            <VerticalStackLayout Spacing="{StaticResource SpacingSmall}">
-                <Label Text="Ingredients"
-                       Style="{StaticResource LabelSectionHeader}" />
+                    <Frame Style="{StaticResource CardFrameFlat}">
+                        <CollectionView ItemsSource="{Binding Recipe.Instructions}"
+                                        SemanticProperties.Description="Cooking instructions">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Label Style="{StaticResource LabelMedium}" Margin="0,4">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="{Binding .}" />
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </Frame>
+                </VerticalStackLayout>
 
-                <Frame Style="{StaticResource CardFrameFlat}">
-                    <CollectionView ItemsSource="{Binding Recipe.Ingredients}"
-                                    SemanticProperties.Description="Ingredients list">
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate x:DataType="models:Ingredient">
-                                <HorizontalStackLayout Spacing="8" Margin="0,4">
-                                    <Label Text="-" Style="{StaticResource LabelMedium}"
-                                           TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryLight}}" />
-                                    <Label Text="{Binding Name}" Style="{StaticResource LabelMedium}" />
-                                    <Label Text="{Binding Quantity}" Style="{StaticResource LabelSmall}" />
-                                    <Label Text="{Binding Unit}" Style="{StaticResource LabelSmall}" />
-                                </HorizontalStackLayout>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
-                </Frame>
+                <HorizontalStackLayout Spacing="{StaticResource SpacingMedium}" Margin="0,8,0,24">
+                    <Button Text="Favorite"
+                            Command="{Binding ToggleFavoriteCommand}"
+                            Style="{StaticResource ButtonSecondary}"
+                            AutomationId="FavoriteButton"
+                            SemanticProperties.Hint="Add or remove this recipe from favorites" />
+                    <Button Text="Read Steps"
+                            Command="{Binding ReadStepsCommand}"
+                            Style="{StaticResource ButtonOutline}"
+                            AutomationId="ReadStepsButton"
+                            SemanticProperties.Hint="Read cooking steps aloud" />
+                </HorizontalStackLayout>
+
             </VerticalStackLayout>
+        </ScrollView>
 
-            <VerticalStackLayout Spacing="{StaticResource SpacingSmall}">
-                <Label Text="Instructions"
-                       Style="{StaticResource LabelSectionHeader}" />
-
-                <Frame Style="{StaticResource CardFrameFlat}">
-                    <CollectionView ItemsSource="{Binding Recipe.Instructions}"
-                                    SemanticProperties.Description="Cooking instructions">
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate>
-                                <Label Style="{StaticResource LabelMedium}" Margin="0,4">
-                                    <Label.FormattedText>
-                                        <FormattedString>
-                                            <Span Text="{Binding .}" />
-                                        </FormattedString>
-                                    </Label.FormattedText>
-                                </Label>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
-                </Frame>
-            </VerticalStackLayout>
-
-            <HorizontalStackLayout Spacing="{StaticResource SpacingMedium}" Margin="0,8,0,24">
-                <Button Text="Favorite"
-                        Command="{Binding ToggleFavoriteCommand}"
-                        Style="{StaticResource ButtonSecondary}"
-                        SemanticProperties.Hint="Add or remove this recipe from favorites" />
-                <Button Text="Read Steps"
-                        Command="{Binding ReadStepsCommand}"
-                        Style="{StaticResource ButtonOutline}"
-                        SemanticProperties.Hint="Read cooking steps aloud" />
-            </HorizontalStackLayout>
-
-        </VerticalStackLayout>
-    </ScrollView>
+        <ActivityIndicator Grid.Row="1"
+                           IsRunning="{Binding IsBusy}"
+                           IsVisible="{Binding IsBusy}"
+                           AutomationId="RecipeDetailActivityIndicator"
+                           SemanticProperties.Description="Loading recipe details"
+                           HorizontalOptions="Center"
+                           Margin="0,8" />
+    </Grid>
 
 </ContentPage>

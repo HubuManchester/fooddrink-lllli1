@@ -36,34 +36,35 @@
         </VerticalStackLayout>
     </Shell.FlyoutFooter>
 
-    <FlyoutItem Title="Home" Icon="home.png">
-        <Tab>
-            <ShellContent ContentTemplate="{DataTemplate views:HomePage}" Route="home" Title="Home" />
+    <TabBar Route="maintabs">
+        <Tab Title="Home" Icon="home.svg">
+            <ShellContent ContentTemplate="{DataTemplate views:HomePage}" Route="home" />
         </Tab>
+        <Tab Title="Search" Icon="search.svg">
+            <ShellContent ContentTemplate="{DataTemplate views:SearchPage}" Route="search" />
+        </Tab>
+        <Tab Title="Favorites" Icon="heart.svg">
+            <ShellContent ContentTemplate="{DataTemplate views:FavoritesPage}" Route="favorites" />
+        </Tab>
+        <Tab Title="Meal Plan" Icon="calendar.svg">
+            <ShellContent ContentTemplate="{DataTemplate views:MealPlanPage}" Route="mealplan" />
+        </Tab>
+    </TabBar>
+
+    <FlyoutItem Title="Categories" Icon="category.svg">
+        <ShellContent ContentTemplate="{DataTemplate views:CategoryListPage}" Route="categories" Title="Categories" />
     </FlyoutItem>
 
-    <FlyoutItem Title="Categories" Icon="category.png">
-        <Tab>
-            <ShellContent ContentTemplate="{DataTemplate views:CategoryListPage}" Route="categories" Title="Categories" />
-        </Tab>
+    <FlyoutItem Title="Settings" Icon="settings.svg">
+        <ShellContent ContentTemplate="{DataTemplate views:SettingsPage}" Route="settings" Title="Settings" />
     </FlyoutItem>
 
-    <FlyoutItem Title="Search" Icon="search.png">
-        <Tab>
-            <ShellContent ContentTemplate="{DataTemplate views:SearchPage}" Route="search" Title="Search" />
-        </Tab>
+    <FlyoutItem Title="Login" Icon="login.svg">
+        <ShellContent ContentTemplate="{DataTemplate views:LoginPage}" Route="login" Title="Login" />
     </FlyoutItem>
 
-    <FlyoutItem Title="Favorites" Icon="favorites.png">
-        <Tab>
-            <ShellContent ContentTemplate="{DataTemplate views:FavoritesPage}" Route="favorites" Title="Favorites" />
-        </Tab>
-    </FlyoutItem>
-
-    <FlyoutItem Title="Meal Plan" Icon="calendar.png">
-        <Tab>
-            <ShellContent ContentTemplate="{DataTemplate views:MealPlanPage}" Route="mealplan" Title="Meal Plan" />
-        </Tab>
+    <FlyoutItem Title="About" Icon="about.svg">
+        <ShellContent ContentTemplate="{DataTemplate views:AboutPage}" Route="about" Title="About" />
     </FlyoutItem>
 
     <ShellContent Route="recipedetail"
@@ -73,23 +74,5 @@
     <ShellContent Route="register"
                   ContentTemplate="{DataTemplate views:RegisterPage}"
                   Title="Register" />
-
-    <FlyoutItem Title="Settings" Icon="settings.png">
-        <Tab>
-            <ShellContent ContentTemplate="{DataTemplate views:SettingsPage}" Route="settings" Title="Settings" />
-        </Tab>
-    </FlyoutItem>
-
-    <FlyoutItem Title="Login" Icon="login.png">
-        <Tab>
-            <ShellContent ContentTemplate="{DataTemplate views:LoginPage}" Route="login" Title="Login" />
-        </Tab>
-    </FlyoutItem>
-
-    <FlyoutItem Title="About" Icon="about.png">
-        <Tab>
-            <ShellContent ContentTemplate="{DataTemplate views:AboutPage}" Route="about" Title="About" />
-        </Tab>
-    </FlyoutItem>
 
 </Shell>

@@ -32,6 +32,7 @@ public partial class CategoryListViewModel : BaseViewModel
         finally
         {
             IsBusy = false;
+            IsRefreshing = false;
         }
     }
 }

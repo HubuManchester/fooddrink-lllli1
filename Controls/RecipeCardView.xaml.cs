@@ -37,6 +37,9 @@ public partial class RecipeCardView : ContentView
     public static readonly BindableProperty FavoriteCommandProperty =
         BindableProperty.Create(nameof(FavoriteCommand), typeof(Command<int>), typeof(RecipeCardView));
 
+    public static readonly BindableProperty ImageUrlProperty =
+        BindableProperty.Create(nameof(ImageUrl), typeof(string), typeof(RecipeCardView), string.Empty);
+
     public int RecipeId
     {
         get => (int)GetValue(RecipeIdProperty);
@@ -101,6 +104,12 @@ public partial class RecipeCardView : ContentView
     {
         get => (Command<int>)GetValue(FavoriteCommandProperty);
         set => SetValue(FavoriteCommandProperty, value);
+    }
+
+    public string ImageUrl
+    {
+        get => (string)GetValue(ImageUrlProperty);
+        set => SetValue(ImageUrlProperty, value);
     }
 
     public RecipeCardView()

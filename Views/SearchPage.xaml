@@ -8,30 +8,49 @@
              x:DataType="vm:SearchViewModel"
              Title="Search">
 
-    <VerticalStackLayout Padding="{StaticResource PaddingPage}" Spacing="{StaticResource SpacingMedium}">
+    <Grid RowDefinitions="Auto,Auto,*,Auto">
+        <VerticalStackLayout Grid.Row="0" Padding="{StaticResource PaddingPage}" Spacing="{StaticResource SpacingSmall}">
+            <SearchBar Placeholder="Search recipes..."
+                       Text="{Binding SearchKeyword}"
+                       AutomationId="SearchBar"
+                       SemanticProperties.Description="Search recipes by keyword"
+                       SemanticProperties.Hint="Enter a recipe name or ingredient to search"
+                       />
+        </VerticalStackLayout>
 
-        <SearchBar Placeholder="Search recipes..."
-                   SearchCommand="{Binding SearchCommand}"
-                   Text="{Binding SearchKeyword}"
-                   SemanticProperties.Description="Search recipes by keyword"
-                   SemanticProperties.Hint="Enter a recipe name or ingredient to search" />
-
-        <ScrollView Orientation="Horizontal">
+        <ScrollView Grid.Row="1" Orientation="Horizontal" Margin="16,0">
             <HorizontalStackLayout Spacing="8">
                 <Button Text="All" Command="{Binding FilterByCategoryCommand}" CommandParameter=""
-                        Style="{StaticResource ButtonChip}" />
+                         Style="{StaticResource ButtonChip}"
+                         AutomationId="FilterAll"
+                         SemanticProperties.Hint="Show all recipes" />
                 <Button Text="Breakfast" Command="{Binding FilterByCategoryCommand}" CommandParameter="Breakfast"
-                        Style="{StaticResource ButtonChip}" />
+                         Style="{StaticResource ButtonChip}"
+                         AutomationId="FilterBreakfast"
+                         SemanticProperties.Hint="Filter by breakfast" />
                 <Button Text="Lunch" Command="{Binding FilterByCategoryCommand}" CommandParameter="Lunch"
-                        Style="{StaticResource ButtonChip}" />
+                         Style="{StaticResource ButtonChip}"
+                         AutomationId="FilterLunch"
+                         SemanticProperties.Hint="Filter by lunch" />
                 <Button Text="Dinner" Command="{Binding FilterByCategoryCommand}" CommandParameter="Dinner"
-                        Style="{StaticResource ButtonChip}" />
+                         Style="{StaticResource ButtonChip}"
+                         AutomationId="FilterDinner"
+                         SemanticProperties.Hint="Filter by dinner" />
                 <Button Text="Dessert" Command="{Binding FilterByCategoryCommand}" CommandParameter="Dessert"
-                        Style="{StaticResource ButtonChip}" />
+                         Style="{StaticResource ButtonChip}"
+                         AutomationId="FilterDessert"
+                         SemanticProperties.Hint="Filter by dessert" />
+                <Button Text="Drinks" Command="{Binding FilterByCategoryCommand}" CommandParameter="Drinks"
+                         Style="{StaticResource ButtonChip}"
+                         AutomationId="FilterDrinks"
+                         SemanticProperties.Hint="Filter by drinks" />
             </HorizontalStackLayout>
         </ScrollView>
 
-        <CollectionView ItemsSource="{Binding SearchResults}"
+        <CollectionView Grid.Row="2"
+                        ItemsSource="{Binding SearchResults}"
+                        Margin="16,0"
+                        AutomationId="SearchResultsList"
                         SemanticProperties.Description="Search results">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:Recipe">
@@ -43,18 +62,28 @@
                         Difficulty="{Binding Difficulty}"
                         Calories="{Binding Calories}"
                         Category="{Binding Category}"
-                        IsFavorite="{Binding IsFavorite}" />
+                        IsFavorite="{Binding IsFavorite}"
+                        ImageUrl="{Binding ImageUrl}" />
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-        <Label Text="No recipes found. Try a different search."
+        <Label Grid.Row="2"
+               Text="No recipes found. Try a different search."
                IsVisible="{Binding IsEmpty}"
                HorizontalOptions="Center"
+               VerticalOptions="Center"
                Style="{StaticResource LabelBody}"
                TextColor="{AppThemeBinding Light={StaticResource TextSecondary}, Dark={StaticResource Gray300}}"
                SemanticProperties.Description="No search results found" />
 
-    </VerticalStackLayout>
+        <ActivityIndicator Grid.Row="3"
+                           IsRunning="{Binding IsBusy}"
+                           IsVisible="{Binding IsBusy}"
+                           AutomationId="SearchActivityIndicator"
+                           SemanticProperties.Description="Searching recipes"
+                           HorizontalOptions="Center"
+                           Margin="0,8" />
+    </Grid>
 
 </ContentPage>

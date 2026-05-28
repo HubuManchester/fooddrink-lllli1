@@ -8,48 +8,59 @@
              x:DataType="vm:HomePageViewModel"
              Title="FoodLens">
 
-    <RefreshView Command="{Binding LoadRecipesCommand}" IsRefreshing="{Binding IsRefreshing}">
-        <ScrollView>
-            <VerticalStackLayout Padding="{StaticResource PaddingPage}" Spacing="{StaticResource SpacingLarge}">
+    <Grid RowDefinitions="*,Auto">
+        <RefreshView Grid.Row="0"
+                     Command="{Binding LoadRecipesCommand}"
+                     IsRefreshing="{Binding IsRefreshing}">
+            <ScrollView>
+                <VerticalStackLayout Padding="{StaticResource PaddingPage}" Spacing="{StaticResource SpacingLarge}">
 
-                <VerticalStackLayout Spacing="4" Margin="0,0,0,8">
-                    <Label Text="Welcome to FoodLens!"
-                           Style="{StaticResource LabelHeadline}"
-                           HorizontalOptions="Start" />
-                    <Label Text="Discover delicious recipes for every meal"
-                           Style="{StaticResource LabelBody}"
-                           HorizontalOptions="Start" />
+                    <VerticalStackLayout Spacing="4" Margin="0,0,0,8">
+                        <Label Text="Welcome to FoodLens!"
+                               Style="{StaticResource LabelHeadline}"
+                               HorizontalOptions="Start"
+                               SemanticProperties.HeadingLevel="Level1" />
+                        <Label Text="Discover delicious recipes for every meal"
+                               Style="{StaticResource LabelBody}"
+                               HorizontalOptions="Start" />
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="{StaticResource SpacingSmall}">
+                        <Label Text="Featured Recipes"
+                               Style="{StaticResource LabelSectionHeader}"
+                               SemanticProperties.HeadingLevel="Level2" />
+
+                        <CollectionView ItemsSource="{Binding FeaturedRecipes}"
+                                        AutomationId="FeaturedRecipesList"
+                                        SemanticProperties.Description="Featured recipes list">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="models:Recipe">
+                                    <controls:RecipeCardView
+                                        RecipeId="{Binding Id}"
+                                        RecipeTitle="{Binding Title}"
+                                        RecipeDescription="{Binding Description}"
+                                        CookTime="{Binding CookTimeMinutes}"
+                                        Difficulty="{Binding Difficulty}"
+                                        Calories="{Binding Calories}"
+                                        Category="{Binding Category}"
+                                        IsFavorite="{Binding IsFavorite}"
+                                        ImageUrl="{Binding ImageUrl}" />
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </VerticalStackLayout>
+
                 </VerticalStackLayout>
+            </ScrollView>
+        </RefreshView>
 
-                <VerticalStackLayout Spacing="{StaticResource SpacingSmall}">
-                    <Label Text="Featured Recipes"
-                           Style="{StaticResource LabelSectionHeader}" />
-
-                    <CollectionView ItemsSource="{Binding FeaturedRecipes}"
-                                    SemanticProperties.Description="Featured recipes list">
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate x:DataType="models:Recipe">
-                                <controls:RecipeCardView
-                                    RecipeId="{Binding Id}"
-                                    RecipeTitle="{Binding Title}"
-                                    RecipeDescription="{Binding Description}"
-                                    CookTime="{Binding CookTimeMinutes}"
-                                    Difficulty="{Binding Difficulty}"
-                                    Calories="{Binding Calories}"
-                                    Category="{Binding Category}"
-                                    IsFavorite="{Binding IsFavorite}" />
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
-                </VerticalStackLayout>
-
-                <ActivityIndicator IsRunning="{Binding IsBusy}"
-                                   IsVisible="{Binding IsBusy}"
-                                   SemanticProperties.Description="Loading recipes"
-                                   HorizontalOptions="Center" />
-
-            </VerticalStackLayout>
-        </ScrollView>
-    </RefreshView>
+        <ActivityIndicator Grid.Row="1"
+                           IsRunning="{Binding IsBusy}"
+                           IsVisible="{Binding IsBusy}"
+                           AutomationId="HomeActivityIndicator"
+                           SemanticProperties.Description="Loading recipes"
+                           HorizontalOptions="Center"
+                           Margin="0,8" />
+    </Grid>
 
 </ContentPage>

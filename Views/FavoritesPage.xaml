@@ -8,35 +8,50 @@
              x:DataType="vm:FavoritesViewModel"
              Title="Favorites">
 
-    <RefreshView Command="{Binding LoadFavoritesCommand}" IsRefreshing="{Binding IsRefreshing}">
-        <VerticalStackLayout Padding="{StaticResource PaddingPage}" Spacing="{StaticResource SpacingMedium}">
-            <Label Text="Your Favorites"
-                   Style="{StaticResource LabelSectionHeader}" />
+    <Grid RowDefinitions="*,Auto">
+        <RefreshView Grid.Row="0"
+                     Command="{Binding LoadFavoritesCommand}"
+                     IsRefreshing="{Binding IsRefreshing}">
+            <VerticalStackLayout Padding="{StaticResource PaddingPage}" Spacing="{StaticResource SpacingMedium}">
+                <Label Text="Your Favorites"
+                       Style="{StaticResource LabelSectionHeader}"
+                       SemanticProperties.HeadingLevel="Level1" />
 
-            <CollectionView ItemsSource="{Binding FavoriteRecipes}"
-                            SemanticProperties.Description="Your favorite recipes">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="models:Recipe">
-                        <controls:RecipeCardView
-                            RecipeId="{Binding Id}"
-                            RecipeTitle="{Binding Title}"
-                            RecipeDescription="{Binding Description}"
-                            CookTime="{Binding CookTimeMinutes}"
-                            Difficulty="{Binding Difficulty}"
-                            Calories="{Binding Calories}"
-                            Category="{Binding Category}"
-                            IsFavorite="{Binding IsFavorite}" />
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                <CollectionView ItemsSource="{Binding FavoriteRecipes}"
+                                AutomationId="FavoritesList"
+                                SemanticProperties.Description="Your favorite recipes">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:Recipe">
+                            <controls:RecipeCardView
+                                RecipeId="{Binding Id}"
+                                RecipeTitle="{Binding Title}"
+                                RecipeDescription="{Binding Description}"
+                                CookTime="{Binding CookTimeMinutes}"
+                                Difficulty="{Binding Difficulty}"
+                                Calories="{Binding Calories}"
+                                Category="{Binding Category}"
+                                IsFavorite="{Binding IsFavorite}"
+                                ImageUrl="{Binding ImageUrl}" />
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
 
-            <Label Text="No favorites yet. Tap the heart on a recipe to save it here."
-                   IsVisible="{Binding IsEmpty}"
-                   HorizontalOptions="Center"
-                   Style="{StaticResource LabelBody}"
-                   Margin="0,32,0,0"
-                   SemanticProperties.Description="No favorites yet" />
-        </VerticalStackLayout>
-    </RefreshView>
+                <Label Text="No favorites yet. Tap the heart on a recipe to save it here."
+                       IsVisible="{Binding IsEmpty}"
+                       HorizontalOptions="Center"
+                       Style="{StaticResource LabelBody}"
+                       Margin="0,32,0,0"
+                       SemanticProperties.Description="No favorites yet" />
+            </VerticalStackLayout>
+        </RefreshView>
+
+        <ActivityIndicator Grid.Row="1"
+                           IsRunning="{Binding IsBusy}"
+                           IsVisible="{Binding IsBusy}"
+                           AutomationId="FavoritesActivityIndicator"
+                           SemanticProperties.Description="Loading favorites"
+                           HorizontalOptions="Center"
+                           Margin="0,8" />
+    </Grid>
 
 </ContentPage>

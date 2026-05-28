@@ -8,12 +8,14 @@
         <VerticalStackLayout Padding="{StaticResource PaddingPage}" Spacing="{StaticResource SpacingMedium}">
 
             <Label Text="Settings"
-                   Style="{StaticResource LabelSectionHeader}" />
+                   Style="{StaticResource LabelSectionHeader}"
+                   SemanticProperties.HeadingLevel="Level1" />
 
             <Frame Style="{StaticResource CardFrame}">
                 <VerticalStackLayout Spacing="20">
                     <Label Text="Appearance"
-                           Style="{StaticResource LabelLarge}" />
+                           Style="{StaticResource LabelLarge}"
+                           SemanticProperties.HeadingLevel="Level2" />
 
                     <HorizontalStackLayout Spacing="16" VerticalOptions="Center">
                         <Label Text="Dark Mode"
@@ -21,6 +23,7 @@
                                VerticalOptions="Center"
                                HorizontalOptions="FillAndExpand" />
                         <Switch x:Name="DarkModeSwitch"
+                                AutomationId="DarkModeSwitch"
                                 SemanticProperties.Description="Toggle dark mode"
                                 SemanticProperties.Hint="Switch between light and dark theme" />
                     </HorizontalStackLayout>
@@ -30,7 +33,8 @@
             <Frame Style="{StaticResource CardFrame}">
                 <VerticalStackLayout Spacing="12">
                     <Label Text="About"
-                           Style="{StaticResource LabelLarge}" />
+                           Style="{StaticResource LabelLarge}"
+                           SemanticProperties.HeadingLevel="Level2" />
                     <Label Text="FoodLens v1.0" Style="{StaticResource LabelBody}" />
                     <Label Text="Smart Recipe &amp; Meal Planner" Style="{StaticResource LabelCaption}" />
                 </VerticalStackLayout>

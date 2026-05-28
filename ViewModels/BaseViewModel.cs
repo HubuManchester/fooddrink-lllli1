@@ -1,3 +1,4 @@
+using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace FoodLens.ViewModels;
@@ -9,4 +10,7 @@ public partial class BaseViewModel : ObservableObject
 
     [ObservableProperty]
     private string title = string.Empty;
+
+    [ObservableProperty]
+    private bool isRefreshing;
 }

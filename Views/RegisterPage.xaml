@@ -13,30 +13,35 @@
             <Label Text="Create Account"
                    Style="{StaticResource LabelTitle}"
                    HorizontalOptions="Center"
-                   TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryLight}}" />
+                   TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryLight}}"
+                   SemanticProperties.HeadingLevel="Level1" />
 
             <Frame Style="{StaticResource CardFrame}">
                 <VerticalStackLayout Spacing="16">
                     <Entry Placeholder="Display Name"
                            Text="{Binding DisplayName}"
+                           AutomationId="RegisterDisplayNameEntry"
                            SemanticProperties.Description="Display name"
                            SemanticProperties.Hint="Enter your display name" />
 
                     <Entry Placeholder="Email"
                            Keyboard="Email"
                            Text="{Binding Email}"
+                           AutomationId="RegisterEmailEntry"
                            SemanticProperties.Description="Email address"
                            SemanticProperties.Hint="Enter your email address" />
 
                     <Entry Placeholder="Password"
                            IsPassword="True"
                            Text="{Binding Password}"
+                           AutomationId="RegisterPasswordEntry"
                            SemanticProperties.Description="Password"
                            SemanticProperties.Hint="Enter a password (minimum 6 characters)" />
 
                     <Entry Placeholder="Confirm Password"
                            IsPassword="True"
                            Text="{Binding ConfirmPassword}"
+                           AutomationId="RegisterConfirmPasswordEntry"
                            SemanticProperties.Description="Confirm password"
                            SemanticProperties.Hint="Re-enter your password to confirm" />
 
@@ -44,10 +49,12 @@
                            TextColor="{StaticResource Danger}"
                            FontSize="12"
                            IsVisible="{Binding HasError}"
+                           AutomationId="RegisterErrorMessage"
                            SemanticProperties.Description="Registration error message" />
 
                     <Button Text="Register"
                             Command="{Binding RegisterCommand}"
+                            AutomationId="RegisterButton"
                             SemanticProperties.Hint="Create your account" />
                 </VerticalStackLayout>
             </Frame>

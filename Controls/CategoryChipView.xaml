@@ -9,7 +9,11 @@
            BackgroundColor="{Binding Source={x:Reference This}, Path=ChipColor}"
            BorderColor="Transparent"
            HasShadow="False"
-           HeightRequest="40">
+           HeightRequest="44"
+           MinimumHeightRequest="44"
+           AutomationId="CategoryChip"
+           SemanticProperties.Description="{Binding Source={x:Reference This}, Path=CategoryName}"
+           SemanticProperties.Hint="Tap to browse recipes in this category">
         <Frame.GestureRecognizers>
             <TapGestureRecognizer Command="{Binding Source={x:Reference This}, Path=TapCommand}"
                                   CommandParameter="{Binding Source={x:Reference This}, Path=CategoryName}" />

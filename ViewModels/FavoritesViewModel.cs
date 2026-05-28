@@ -14,9 +14,6 @@ public partial class FavoritesViewModel : BaseViewModel
     private ObservableCollection<Recipe> favoriteRecipes = new();
 
     [ObservableProperty]
-    private bool isRefreshing;
-
-    [ObservableProperty]
     private bool isEmpty = true;
 
     public FavoritesViewModel(IDataService dataService)

@@ -8,42 +8,61 @@
     <Frame Style="{StaticResource CardFrame}"
            Margin="0,6"
            Padding="0"
-           HeightRequest="180">
+           HeightRequest="180"
+           AutomationId="RecipeCard"
+           SemanticProperties.Description="{Binding Source={x:Reference This}, Path=RecipeTitle}"
+           SemanticProperties.Hint="Tap to view recipe details">
         <Frame.GestureRecognizers>
             <TapGestureRecognizer Command="{Binding Source={x:Reference This}, Path=TapCommand}"
                                   CommandParameter="{Binding Source={x:Reference This}, Path=RecipeId}" />
         </Frame.GestureRecognizers>
 
-        <Grid RowDefinitions="Auto,*,Auto" ColumnDefinitions="*,Auto"
+        <Grid RowDefinitions="Auto,*,Auto" ColumnDefinitions="Auto,*,Auto"
               Padding="16" RowSpacing="4">
 
-            <Label Grid.Row="0" Grid.Column="0"
+            <Image Grid.Row="0" Grid.Column="0"
+                   Source="{Binding Source={x:Reference This}, Path=ImageUrl}"
+                   WidthRequest="40" HeightRequest="40"
+                   VerticalOptions="Start"
+                   IsVisible="{Binding Source={x:Reference This}, Path=ImageUrl, Converter={StaticResource StringNotEmptyConverter}}"
+                   SemanticProperties.Description="Recipe thumbnail">
+                <Image.Aspect>
+                    <Aspect>AspectFill</Aspect>
+                </Image.Aspect>
+            </Image>
+
+            <Label Grid.Row="0" Grid.Column="1"
                    Text="{Binding Source={x:Reference This}, Path=RecipeTitle}"
                    Style="{StaticResource LabelLarge}"
                    LineBreakMode="TailTruncation"
-                   MaximumHeightRequest="52" />
+                   MaximumHeightRequest="52"
+                   Margin="8,0,0,0" />
 
-            <Image Grid.Row="0" Grid.Column="1"
-                   Source="{Binding Source={x:Reference This}, Path=FavoriteIcon}"
-                   WidthRequest="24" HeightRequest="24"
-                   VerticalOptions="Start">
+            <Image Grid.Row="0" Grid.Column="2"
+                    Source="{Binding Source={x:Reference This}, Path=FavoriteIcon}"
+                    WidthRequest="24" HeightRequest="24"
+                    MinimumWidthRequest="44" MinimumHeightRequest="44"
+                    VerticalOptions="Start"
+                    HorizontalOptions="End"
+                    SemanticProperties.Description="Toggle favorite">
                 <Image.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding Source={x:Reference This}, Path=FavoriteCommand}"
                                           CommandParameter="{Binding Source={x:Reference This}, Path=RecipeId}" />
                 </Image.GestureRecognizers>
             </Image>
 
-            <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+            <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"
                    Text="{Binding Source={x:Reference This}, Path=RecipeDescription}"
                    Style="{StaticResource LabelBody}"
                    LineBreakMode="TailTruncation"
                    MaxLines="2"
                    VerticalOptions="Start" />
 
-            <HorizontalStackLayout Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+            <HorizontalStackLayout Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3"
                                    Spacing="16" VerticalOptions="End">
                 <HorizontalStackLayout Spacing="4">
-                    <Image Source="clock_icon.png" WidthRequest="14" HeightRequest="14"
+                    <Label Text="&#x1F552;"
+                           FontSize="12"
                            VerticalOptions="Center" />
                     <Label Text="{Binding Source={x:Reference This}, Path=CookTime, StringFormat='{0} min'}"
                            Style="{StaticResource LabelSmall}" VerticalOptions="Center" />

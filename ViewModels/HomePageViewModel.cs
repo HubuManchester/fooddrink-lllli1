@@ -13,9 +13,6 @@ public partial class HomePageViewModel : BaseViewModel
     [ObservableProperty]
     private ObservableCollection<Recipe> featuredRecipes = new();
 
-    [ObservableProperty]
-    private bool isRefreshing;
-
     public HomePageViewModel(IDataService dataService)
     {
         _dataService = dataService;

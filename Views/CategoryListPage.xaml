@@ -8,27 +8,43 @@
              x:DataType="vm:CategoryListViewModel"
              Title="Categories">
 
-    <VerticalStackLayout Padding="{StaticResource PaddingPage}" Spacing="{StaticResource SpacingMedium}">
-        <Label Text="Browse Categories"
-               Style="{StaticResource LabelSectionHeader}" />
+    <Grid RowDefinitions="*,Auto">
+        <RefreshView Grid.Row="0"
+                     Command="{Binding LoadCategoriesCommand}"
+                     IsRefreshing="{Binding IsRefreshing}">
+            <VerticalStackLayout Padding="{StaticResource PaddingPage}" Spacing="{StaticResource SpacingMedium}">
+                <Label Text="Browse Categories"
+                       Style="{StaticResource LabelSectionHeader}"
+                       SemanticProperties.HeadingLevel="Level1" />
 
-        <CollectionView ItemsSource="{Binding Categories}"
-                        SemanticProperties.Description="Recipe categories">
-            <CollectionView.ItemsLayout>
-                <GridItemsLayout Orientation="Vertical" Span="2"
-                                 HorizontalItemSpacing="12"
-                                 VerticalItemSpacing="12" />
-            </CollectionView.ItemsLayout>
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="models:Category">
-                    <controls:CategoryChipView
-                        CategoryName="{Binding Name}"
-                        ChipIcon="{Binding Icon}"
-                        ChipColor="{Binding Color}"
-                        HeightRequest="80" />
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-    </VerticalStackLayout>
+                <CollectionView ItemsSource="{Binding Categories}"
+                                AutomationId="CategoriesList"
+                                SemanticProperties.Description="Recipe categories">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical" Span="2"
+                                         HorizontalItemSpacing="12"
+                                         VerticalItemSpacing="12" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:Category">
+                            <controls:CategoryChipView
+                                CategoryName="{Binding Name}"
+                                ChipIcon="{Binding Icon}"
+                                ChipColor="{Binding Color}"
+                                HeightRequest="80" />
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </RefreshView>
+
+        <ActivityIndicator Grid.Row="1"
+                           IsRunning="{Binding IsBusy}"
+                           IsVisible="{Binding IsBusy}"
+                           AutomationId="CategoriesActivityIndicator"
+                           SemanticProperties.Description="Loading categories"
+                           HorizontalOptions="Center"
+                           Margin="0,8" />
+    </Grid>
 
 </ContentPage>

@@ -14,7 +14,8 @@
                 <Label Text="FoodLens"
                        Style="{StaticResource LabelDisplay}"
                        TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryLight}}"
-                       HorizontalOptions="Center" />
+                       HorizontalOptions="Center"
+                       SemanticProperties.HeadingLevel="Level1" />
 
                 <Label Text="Sign in to your account"
                        Style="{StaticResource LabelBody}"
@@ -26,12 +27,14 @@
                     <Entry Placeholder="Email"
                            Keyboard="Email"
                            Text="{Binding Email}"
+                           AutomationId="LoginEmailEntry"
                            SemanticProperties.Description="Email address"
                            SemanticProperties.Hint="Enter your email address" />
 
                     <Entry Placeholder="Password"
                            IsPassword="True"
                            Text="{Binding Password}"
+                           AutomationId="LoginPasswordEntry"
                            SemanticProperties.Description="Password"
                            SemanticProperties.Hint="Enter your password" />
 
@@ -39,10 +42,12 @@
                            TextColor="{StaticResource Danger}"
                            FontSize="12"
                            IsVisible="{Binding HasError}"
+                           AutomationId="LoginErrorMessage"
                            SemanticProperties.Description="Login error message" />
 
                     <Button Text="Login"
                             Command="{Binding LoginCommand}"
+                            AutomationId="LoginButton"
                             SemanticProperties.Hint="Sign in to your account" />
                 </VerticalStackLayout>
             </Frame>

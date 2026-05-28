@@ -43,6 +43,7 @@ public partial class MealPlanViewModel : BaseViewModel
         finally
         {
             IsBusy = false;
+            IsRefreshing = false;
         }
     }
 }

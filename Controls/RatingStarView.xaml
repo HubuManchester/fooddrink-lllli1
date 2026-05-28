@@ -4,7 +4,8 @@
              x:Class="FoodLens.Controls.RatingStarView"
              x:Name="This">
 
-    <HorizontalStackLayout Spacing="2" VerticalOptions="Center">
+    <HorizontalStackLayout Spacing="2" VerticalOptions="Center"
+                            SemanticProperties.Description="{Binding Source={x:Reference This}, Path=Rating, StringFormat='Rating: {0} out of 5'}">
         <Image Source="star_filled.png"
                WidthRequest="18" HeightRequest="18"
                IsVisible="{Binding Source={x:Reference This}, Path=Star1Visible}" />
