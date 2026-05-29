@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:FoodLens.ViewModels"
              x:Class="FoodLens.Views.SettingsPage"
+             x:DataType="vm:SettingsViewModel"
              Title="Settings">
 
     <ScrollView>
@@ -27,6 +29,25 @@
                                 SemanticProperties.Description="Toggle dark mode"
                                 SemanticProperties.Hint="Switch between light and dark theme" />
                     </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Frame>
+
+            <Frame Style="{StaticResource CardFrame}">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Location"
+                           Style="{StaticResource LabelLarge}"
+                           SemanticProperties.HeadingLevel="Level2" />
+                    <Label Text="{Binding LocationStatus}"
+                           Style="{StaticResource LabelBody}" />
+                    <Button Text="Get My Location"
+                            Command="{Binding GetLocationCommand}"
+                            AutomationId="GetLocationButton"
+                            SemanticProperties.Hint="Get your current geographic location"
+                            Style="{StaticResource ButtonOutline}" />
+                    <Label Text="{Binding LocationDisplay}"
+                           Style="{StaticResource LabelCaption}"
+                           IsVisible="{Binding HasLocation}"
+                           SemanticProperties.Description="Current location" />
                 </VerticalStackLayout>
             </Frame>
 

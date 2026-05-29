@@ -1,5 +1,6 @@
 ﻿using FoodLens.Services;
 using FoodLens.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace FoodLens;
@@ -42,11 +43,14 @@ public static class MauiProgram
         builder.Services.AddTransient<ViewModels.MealPlanViewModel>();
         builder.Services.AddTransient<ViewModels.LoginViewModel>();
         builder.Services.AddTransient<ViewModels.RegisterViewModel>();
+        builder.Services.AddTransient<ViewModels.SettingsViewModel>();
 
 #if DEBUG
         builder.Logging.AddDebug();
 #endif
 
-        return builder.Build();
+        var app = builder.Build();
+        BaseViewModel.SetServiceProvider(app.Services);
+        return app;
     }
 }

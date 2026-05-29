@@ -1,3 +1,5 @@
+using System.Windows.Input;
+
 namespace FoodLens.Controls;
 
 public partial class CategoryChipView : ContentView
@@ -12,7 +14,7 @@ public partial class CategoryChipView : ContentView
         BindableProperty.Create(nameof(ChipColor), typeof(string), typeof(CategoryChipView), "#808080");
 
     public static readonly BindableProperty TapCommandProperty =
-        BindableProperty.Create(nameof(TapCommand), typeof(Command<string>), typeof(CategoryChipView));
+        BindableProperty.Create(nameof(TapCommand), typeof(ICommand), typeof(CategoryChipView));
 
     public string CategoryName
     {
@@ -32,9 +34,9 @@ public partial class CategoryChipView : ContentView
         set => SetValue(ChipColorProperty, value);
     }
 
-    public Command<string> TapCommand
+    public ICommand TapCommand
     {
-        get => (Command<string>)GetValue(TapCommandProperty);
+        get => (ICommand)GetValue(TapCommandProperty);
         set => SetValue(TapCommandProperty, value);
     }
 

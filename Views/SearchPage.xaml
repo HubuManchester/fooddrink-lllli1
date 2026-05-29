@@ -63,7 +63,9 @@
                         Calories="{Binding Calories}"
                         Category="{Binding Category}"
                         IsFavorite="{Binding IsFavorite}"
-                        ImageUrl="{Binding ImageUrl}" />
+                        ImageUrl="{Binding ImageUrl}"
+                        TapCommand="{Binding Source={RelativeSource AncestorType={x:Type vm:SearchViewModel}}, Path=NavigateToRecipeCommand}"
+                        FavoriteCommand="{Binding Source={RelativeSource AncestorType={x:Type vm:SearchViewModel}}, Path=ToggleFavoriteCommand}" />
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>

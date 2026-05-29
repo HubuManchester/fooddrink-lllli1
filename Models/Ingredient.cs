@@ -1,7 +1,10 @@
+using SQLite;
+
 namespace FoodLens.Models;
 
 public class Ingredient
 {
+    [PrimaryKey, AutoIncrement]
     public int Id { get; set; }
     public string Name { get; set; } = string.Empty;
     public double Quantity { get; set; }

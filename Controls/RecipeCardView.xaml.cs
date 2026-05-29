@@ -1,3 +1,4 @@
+using System.Windows.Input;
 using FoodLens.Models;
 
 namespace FoodLens.Controls;
@@ -32,10 +33,10 @@ public partial class RecipeCardView : ContentView
         BindableProperty.Create(nameof(FavoriteIcon), typeof(string), typeof(RecipeCardView), "heart_outline.png");
 
     public static readonly BindableProperty TapCommandProperty =
-        BindableProperty.Create(nameof(TapCommand), typeof(Command<int>), typeof(RecipeCardView));
+        BindableProperty.Create(nameof(TapCommand), typeof(ICommand), typeof(RecipeCardView));
 
     public static readonly BindableProperty FavoriteCommandProperty =
-        BindableProperty.Create(nameof(FavoriteCommand), typeof(Command<int>), typeof(RecipeCardView));
+        BindableProperty.Create(nameof(FavoriteCommand), typeof(ICommand), typeof(RecipeCardView));
 
     public static readonly BindableProperty ImageUrlProperty =
         BindableProperty.Create(nameof(ImageUrl), typeof(string), typeof(RecipeCardView), string.Empty);
@@ -94,15 +95,15 @@ public partial class RecipeCardView : ContentView
         set => SetValue(FavoriteIconProperty, value);
     }
 
-    public Command<int> TapCommand
+    public ICommand TapCommand
     {
-        get => (Command<int>)GetValue(TapCommandProperty);
+        get => (ICommand)GetValue(TapCommandProperty);
         set => SetValue(TapCommandProperty, value);
     }
 
-    public Command<int> FavoriteCommand
+    public ICommand FavoriteCommand
     {
-        get => (Command<int>)GetValue(FavoriteCommandProperty);
+        get => (ICommand)GetValue(FavoriteCommandProperty);
         set => SetValue(FavoriteCommandProperty, value);
     }
 

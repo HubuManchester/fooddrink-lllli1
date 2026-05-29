@@ -20,6 +20,11 @@
                                Style="{StaticResource LabelHeadline}"
                                HorizontalOptions="Start"
                                SemanticProperties.HeadingLevel="Level1" />
+                        <Label Text="{Binding LocationGreeting}"
+                               Style="{StaticResource LabelCaption}"
+                               HorizontalOptions="Start"
+                               IsVisible="{Binding LocationGreeting, Converter={StaticResource StringNotEmptyConverter}}"
+                               SemanticProperties.Description="Your current location" />
                         <Label Text="Discover delicious recipes for every meal"
                                Style="{StaticResource LabelBody}"
                                HorizontalOptions="Start" />
@@ -44,7 +49,9 @@
                                         Calories="{Binding Calories}"
                                         Category="{Binding Category}"
                                         IsFavorite="{Binding IsFavorite}"
-                                        ImageUrl="{Binding ImageUrl}" />
+                                        ImageUrl="{Binding ImageUrl}"
+                                        TapCommand="{Binding Source={RelativeSource AncestorType={x:Type vm:HomePageViewModel}}, Path=NavigateToRecipeCommand}"
+                                        FavoriteCommand="{Binding Source={RelativeSource AncestorType={x:Type vm:HomePageViewModel}}, Path=ToggleFavoriteCommand}" />
                                 </DataTemplate>
                             </CollectionView.ItemTemplate>
                         </CollectionView>

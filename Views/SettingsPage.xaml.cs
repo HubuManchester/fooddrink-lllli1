@@ -1,10 +1,16 @@
+using FoodLens.ViewModels;
+
 namespace FoodLens.Views;
 
 public partial class SettingsPage : ContentPage
 {
-    public SettingsPage()
+    private readonly SettingsViewModel _viewModel;
+
+    public SettingsPage(SettingsViewModel viewModel)
     {
         InitializeComponent();
+        BindingContext = viewModel;
+        _viewModel = viewModel;
         DarkModeSwitch.IsToggled = Application.Current!.UserAppTheme == AppTheme.Dark;
         DarkModeSwitch.Toggled += OnDarkModeToggled;
     }

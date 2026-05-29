@@ -96,7 +96,7 @@
                         <CollectionView ItemsSource="{Binding Recipe.Instructions}"
                                         SemanticProperties.Description="Cooking instructions">
                             <CollectionView.ItemTemplate>
-                                <DataTemplate>
+                                <DataTemplate x:DataType="x:String">
                                     <Label Style="{StaticResource LabelMedium}" Margin="0,4">
                                         <Label.FormattedText>
                                             <FormattedString>
@@ -112,16 +112,48 @@
 
                 <HorizontalStackLayout Spacing="{StaticResource SpacingMedium}" Margin="0,8,0,24">
                     <Button Text="Favorite"
-                            Command="{Binding ToggleFavoriteCommand}"
+                            Command="{Binding ToggleDetailFavoriteCommand}"
                             Style="{StaticResource ButtonSecondary}"
                             AutomationId="FavoriteButton"
                             SemanticProperties.Hint="Add or remove this recipe from favorites" />
-                    <Button Text="Read Steps"
+                    <Button Text="{Binding ReadButtonText}"
                             Command="{Binding ReadStepsCommand}"
                             Style="{StaticResource ButtonOutline}"
                             AutomationId="ReadStepsButton"
-                            SemanticProperties.Hint="Read cooking steps aloud" />
+                            SemanticProperties.Hint="Read cooking steps aloud using text to speech" />
+                    <Button Text="Scan Food"
+                            Command="{Binding CaptureAndRecognizeCommand}"
+                            Style="{StaticResource ButtonOutline}"
+                            AutomationId="CameraButton"
+                            SemanticProperties.Hint="Take a photo to recognize ingredients using camera" />
                 </HorizontalStackLayout>
+
+                <VerticalStackLayout Spacing="{StaticResource SpacingSmall}"
+                                     IsVisible="{Binding HasRecognizedIngredients}">
+                    <Label Text="Recognized Ingredients"
+                           Style="{StaticResource LabelSectionHeader}"
+                           SemanticProperties.HeadingLevel="Level2" />
+                    <Frame Style="{StaticResource CardFrameFlat}">
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="AI detected these ingredients from your photo:"
+                                   Style="{StaticResource LabelCaption}"
+                                   Margin="0,0,0,8" />
+                            <CollectionView ItemsSource="{Binding RecognizedIngredients}"
+                                            AutomationId="RecognizedIngredientsList"
+                                            SemanticProperties.Description="Recognized ingredients from camera">
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate x:DataType="x:String">
+                                        <HorizontalStackLayout Spacing="8" Margin="0,2">
+                                            <Label Text="•" Style="{StaticResource LabelMedium}"
+                                                   TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryLight}}" />
+                                            <Label Text="{Binding .}" Style="{StaticResource LabelMedium}" />
+                                        </HorizontalStackLayout>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </VerticalStackLayout>
+                    </Frame>
+                </VerticalStackLayout>
 
             </VerticalStackLayout>
         </ScrollView>

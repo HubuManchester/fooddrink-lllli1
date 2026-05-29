@@ -9,13 +9,18 @@ namespace FoodLens.ViewModels;
 public partial class HomePageViewModel : BaseViewModel
 {
     private readonly IDataService _dataService;
+    private readonly ILocationService _locationService;
 
     [ObservableProperty]
     private ObservableCollection<Recipe> featuredRecipes = new();
 
-    public HomePageViewModel(IDataService dataService)
+    [ObservableProperty]
+    private string locationGreeting = string.Empty;
+
+    public HomePageViewModel(IDataService dataService, ILocationService locationService)
     {
         _dataService = dataService;
+        _locationService = locationService;
         Title = "FoodLens";
     }
 
@@ -28,11 +33,30 @@ public partial class HomePageViewModel : BaseViewModel
         {
             var recipes = await _dataService.GetRecipesAsync();
             FeaturedRecipes = new ObservableCollection<Recipe>(recipes);
+
+            _ = LoadLocationGreetingAsync();
         }
         finally
         {
             IsBusy = false;
             IsRefreshing = false;
         }
+    }
+
+    private async Task LoadLocationGreetingAsync()
+    {
+        try
+        {
+            var location = await _locationService.GetCurrentLocationAsync();
+            if (location is not null)
+            {
+                var address = await _locationService.GetAddressAsync(location.Latitude, location.Longitude);
+                if (address is not null)
+                {
+                    LocationGreeting = $"Near {address}";
+                }
+            }
+        }
+        catch (Exception) { }
     }
 }
