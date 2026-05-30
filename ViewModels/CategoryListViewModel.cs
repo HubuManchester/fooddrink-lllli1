@@ -35,4 +35,10 @@ public partial class CategoryListViewModel : BaseViewModel
             IsRefreshing = false;
         }
     }
+
+    [RelayCommand]
+    private static async Task NavigateToCategoryAsync(string categoryName)
+    {
+        await Shell.Current.GoToAsync($"///search?category={Uri.EscapeDataString(categoryName)}");
+    }
 }

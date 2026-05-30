@@ -31,7 +31,8 @@
                                 CategoryName="{Binding Name}"
                                 ChipIcon="{Binding Icon}"
                                 ChipColor="{Binding Color}"
-                                HeightRequest="80" />
+                                HeightRequest="80"
+                                TapCommand="{Binding Source={RelativeSource AncestorType={x:Type vm:CategoryListViewModel}}, Path=NavigateToCategoryCommand}" />
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>

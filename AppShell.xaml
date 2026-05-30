@@ -51,6 +51,10 @@
         </Tab>
     </TabBar>
 
+    <FlyoutItem Title="Home" Icon="home.svg">
+        <ShellContent ContentTemplate="{DataTemplate views:HomePage}" Route="flyouthome" Title="Home" />
+    </FlyoutItem>
+
     <FlyoutItem Title="Categories" Icon="category.svg">
         <ShellContent ContentTemplate="{DataTemplate views:CategoryListPage}" Route="categories" Title="Categories" />
     </FlyoutItem>

@@ -6,7 +6,7 @@ using FoodLens.Services;
 
 namespace FoodLens.ViewModels;
 
-public partial class SearchViewModel : BaseViewModel
+public partial class SearchViewModel : BaseViewModel, IQueryAttributable
 {
     private readonly IDataService _dataService;
     private CancellationTokenSource? _searchCts;
@@ -20,10 +20,26 @@ public partial class SearchViewModel : BaseViewModel
     [ObservableProperty]
     private bool isEmpty;
 
+    [ObservableProperty]
+    private string selectedCategory = string.Empty;
+
     public SearchViewModel(IDataService dataService)
     {
         _dataService = dataService;
         Title = "Search";
+    }
+
+    public void ApplyQueryAttributes(IDictionary<string, object> query)
+    {
+        if (query.TryGetValue("category", out var category))
+        {
+            var cat = category?.ToString() ?? string.Empty;
+            SelectedCategory = cat;
+            MainThread.InvokeOnMainThreadAsync(async () =>
+            {
+                await FilterByCategoryAsync(cat);
+            });
+        }
     }
 
     partial void OnSearchKeywordChanged(string value)
@@ -74,14 +90,16 @@ public partial class SearchViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    private async Task FilterByCategoryAsync(string category)
+    private async Task FilterByCategoryAsync(string? category)
     {
         IsBusy = true;
         try
         {
-            var results = await _dataService.SearchRecipesAsync(string.IsNullOrEmpty(category) ? "" : null, category);
+            var cat = string.IsNullOrEmpty(category) ? null : category;
+            var results = await _dataService.SearchRecipesAsync(string.Empty, cat);
             SearchResults = new ObservableCollection<Recipe>(results);
             IsEmpty = SearchResults.Count == 0;
+            SelectedCategory = category ?? string.Empty;
         }
         finally
         {
