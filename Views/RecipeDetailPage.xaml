@@ -8,8 +8,15 @@
              x:DataType="vm:RecipeDetailViewModel"
              Title="{Binding Recipe.Title}">
 
-    <Grid RowDefinitions="*,Auto">
-        <ScrollView Grid.Row="0">
+    <Grid RowDefinitions="Auto,*,Auto">
+        <Button Grid.Row="0" Text="← Back"
+                Command="{Binding GoBackCommand}"
+                Style="{StaticResource ButtonSecondary}"
+                HorizontalOptions="Start"
+                Margin="16,8,16,0"
+                SemanticProperties.Description="Go back"
+                SemanticProperties.Hint="Return to previous page" />
+        <ScrollView Grid.Row="1">
             <VerticalStackLayout Padding="{StaticResource PaddingPage}" Spacing="{StaticResource SpacingLarge}">
 
                 <Frame Style="{StaticResource CardFrame}">
@@ -158,7 +165,7 @@
             </VerticalStackLayout>
         </ScrollView>
 
-        <ActivityIndicator Grid.Row="1"
+        <ActivityIndicator Grid.Row="2"
                            IsRunning="{Binding IsBusy}"
                            IsVisible="{Binding IsBusy}"
                            AutomationId="RecipeDetailActivityIndicator"

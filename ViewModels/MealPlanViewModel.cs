@@ -19,6 +19,20 @@ public partial class MealPlanViewModel : BaseViewModel
     [ObservableProperty]
     private bool isEmpty;
 
+    [ObservableProperty]
+    private ObservableCollection<Recipe> availableRecipes = new();
+
+    [ObservableProperty]
+    private Recipe? selectedRecipe;
+
+    [ObservableProperty]
+    private string selectedMealType = "Lunch";
+
+    [ObservableProperty]
+    private bool isRecipePickerVisible;
+
+    public List<string> MealTypes { get; } = new() { "Breakfast", "Lunch", "Dinner", "Snack" };
+
     public MealPlanViewModel(IDataService dataService)
     {
         _dataService = dataService;
@@ -45,5 +59,52 @@ public partial class MealPlanViewModel : BaseViewModel
             IsBusy = false;
             IsRefreshing = false;
         }
+    }
+
+    [RelayCommand]
+    private async Task ShowAddRecipePickerAsync()
+    {
+        var recipes = await _dataService.GetRecipesAsync();
+        AvailableRecipes = new ObservableCollection<Recipe>(recipes);
+        IsRecipePickerVisible = true;
+    }
+
+    [RelayCommand]
+    private async Task AddSelectedRecipeAsync()
+    {
+        if (SelectedRecipe is null) return;
+
+        var plan = new MealPlan
+        {
+            Date = SelectedDate,
+            MealType = SelectedMealType,
+            RecipeId = SelectedRecipe.Id,
+            Recipe = SelectedRecipe
+        };
+
+        await _dataService.AddMealPlanAsync(plan);
+        IsRecipePickerVisible = false;
+        SelectedRecipe = null;
+        await LoadMealPlansAsync();
+    }
+
+    [RelayCommand]
+    private void CancelRecipePicker()
+    {
+        IsRecipePickerVisible = false;
+        SelectedRecipe = null;
+    }
+
+    [RelayCommand]
+    private async Task DeleteMealPlanAsync(MealPlan plan)
+    {
+        await _dataService.RemoveMealPlanAsync(plan.Id);
+        await LoadMealPlansAsync();
+    }
+
+    [RelayCommand]
+    private static async Task GoToRecipeDetailAsync(int recipeId)
+    {
+        await Shell.Current.GoToAsync($"///recipedetail?id={recipeId}");
     }
 }

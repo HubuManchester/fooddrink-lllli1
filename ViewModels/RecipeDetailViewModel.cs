@@ -149,4 +149,10 @@ public partial class RecipeDetailViewModel : BaseViewModel, IQueryAttributable
             IsBusy = false;
         }
     }
+
+    [RelayCommand]
+    private static async Task GoBackAsync()
+    {
+        await Shell.Current.GoToAsync("..");
+    }
 }
