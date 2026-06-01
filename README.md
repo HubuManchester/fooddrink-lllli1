@@ -62,7 +62,8 @@ FoodLens is a cross-platform mobile application built with **.NET 9 MAUI** that 
 | CommunityToolkit.Mvvm | 8.4.2 | MVVM source generators (ObservableObject, RelayCommand) |
 | sqlite-net-pcl | 1.9.172 | Local SQLite database |
 | C# / XAML | 13 / MAUI | Primary languages |
-| Roboflow API | — | Computer vision for food recognition |
+| Roboflow API | — | Computer vision for food recognition (fallback) |
+| ONNX Runtime | 1.21+ | On-device food classification (food101 model) |
 | OpenStreetMap Nominatim | — | Reverse geocoding |
 | Leaflet.js | — | Embedded map rendering |
 
@@ -144,6 +145,10 @@ FoodLens/
 │
 ├── Data/
 │   └── recipes.json                # Seed data (reference only)
+│
+├── Resources/Raw/
+│   ├── food101_model.onnx          # ONNX food classification model (NOT in repo — see "ONNX Local Model Setup")
+│   └── food101_labels.txt          # 101 food class labels
 │
 ├── App.xaml / App.xaml.cs           # Application entry, resource dictionary
 ├── AppShell.xaml / AppShell.xaml.cs # Shell navigation (tabs + flyout)
@@ -263,7 +268,7 @@ AppShell
 | # | Feature | Service | API Used |
 |---|---------|---------|----------|
 | 1 | **Camera** | `ICameraService` | `MediaPicker.CapturePhotoAsync()` |
-| 2 | **Food Recognition** | `IVisionService` | Roboflow AI REST API (object detection) |
+| 2 | **Food Recognition** | `IVisionService` | Local ONNX model (food101) — runs entirely on-device |
 | 3 | **Geolocation** | `ILocationService` | `Geolocation.GetLocationAsync()` |
 | 4 | **Reverse Geocoding** | `ILocationService` | OpenStreetMap Nominatim API + `Geocoding` |
 | 5 | **Map Display** | `ILocationService` | Leaflet.js in `WebView` |
@@ -309,6 +314,41 @@ FoodLens targets **WCAG 2.0 AA** compliance:
 - **Font sizes**: 12 / 14 / 16 / 20 / 24 / 32 / 40px
 - **Card style**: Rounded frames with shadow, gradient placeholders for missing images
 - **Responsive**: Orientation-aware layout — single column in portrait, 2-column grid in landscape on tablets; always 2-column on Windows desktop (`PlatformHelper.IsWideLayout` + `DeviceDisplay.MainDisplayInfoChanged`)
+
+---
+
+## ONNX Local Model Setup
+
+FoodLens supports **on-device food recognition** using a local ONNX model (food101). Due to GitHub's **100 MB file size limit**, the model file (`food101_model.onnx`, ~328 MB) is **not included** in this repository.
+
+### Download the Model
+
+1. Obtain the `food101_model.onnx` file (Food-101 classification model, input: 224x224 RGB, output: 101-class logits)
+2. Place it in the project at the following location:
+
+```
+FoodLens/Resources/Raw/food101_model.onnx
+```
+
+### How It Works
+
+At runtime, `VisionService` loads the model in this order:
+
+1. Checks `FileSystem.AppDataDirectory` for a previously extracted copy of the model
+2. If not found, extracts from the app bundle (`Resources/Raw/food101_model.onnx`) to app data directory
+3. Creates an `InferenceSession` using `Microsoft.ML.OnnxRuntime`
+
+### Build with the Model
+
+After placing the model file, build normally:
+
+```bash
+dotnet build
+```
+
+The file will be included as a `MauiAsset` and packaged into the app automatically.
+
+> **Note:** If the model file is missing, the camera food recognition feature will be unavailable. All other features (browsing, search, meal planning, etc.) work without the model.
 
 ---
 
