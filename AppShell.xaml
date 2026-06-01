@@ -71,12 +71,5 @@
         <ShellContent ContentTemplate="{DataTemplate views:AboutPage}" Route="about" Title="About" />
     </FlyoutItem>
 
-    <ShellContent Route="recipedetail"
-                  ContentTemplate="{DataTemplate views:RecipeDetailPage}"
-                  Title="Recipe Detail" />
-
-    <ShellContent Route="register"
-                  ContentTemplate="{DataTemplate views:RegisterPage}"
-                  Title="Register" />
 
 </Shell>

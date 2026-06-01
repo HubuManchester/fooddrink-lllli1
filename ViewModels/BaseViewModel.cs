@@ -22,7 +22,7 @@ public partial class BaseViewModel : ObservableObject
     [RelayCommand]
     private static async Task NavigateToRecipeAsync(int recipeId)
     {
-        await Shell.Current.GoToAsync($"///recipedetail?id={recipeId}");
+        await Shell.Current.GoToAsync($"recipedetail?id={recipeId}");
     }
 
     [RelayCommand]

@@ -105,6 +105,6 @@ public partial class MealPlanViewModel : BaseViewModel
     [RelayCommand]
     private static async Task GoToRecipeDetailAsync(int recipeId)
     {
-        await Shell.Current.GoToAsync($"///recipedetail?id={recipeId}");
+        await Shell.Current.GoToAsync($"recipedetail?id={recipeId}");
     }
 }
