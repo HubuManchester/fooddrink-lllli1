@@ -35,9 +35,13 @@ public partial class SettingsViewModel : BaseViewModel
             {
                 LocationDisplay = $"Lat: {location.Latitude:F4}, Lon: {location.Longitude:F4}";
                 var address = await _locationService.GetAddressAsync(location.Latitude, location.Longitude);
-                if (address is not null)
+                if (!string.IsNullOrWhiteSpace(address))
                 {
                     LocationDisplay += $"\n{address}";
+                }
+                else
+                {
+                    LocationDisplay += "\n(Reverse geocoding returned no results)";
                 }
                 HasLocation = true;
                 LocationStatus = "Location retrieved successfully";

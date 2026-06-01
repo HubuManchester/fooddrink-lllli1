@@ -51,7 +51,7 @@ public partial class HomePageViewModel : BaseViewModel
             if (location is not null)
             {
                 var address = await _locationService.GetAddressAsync(location.Latitude, location.Longitude);
-                if (address is not null)
+                if (!string.IsNullOrWhiteSpace(address))
                 {
                     LocationGreeting = $"Near {address}";
                 }

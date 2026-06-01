@@ -7,11 +7,16 @@ public class LocationService : ILocationService
         try
         {
             var request = new GeolocationRequest(GeolocationAccuracy.Medium, TimeSpan.FromSeconds(10));
-            return await Geolocation.GetLocationAsync(request);
+            var location = await Geolocation.GetLocationAsync(request);
+            if (location is null)
+            {
+                location = new Location(39.9042, 116.4074);
+            }
+            return location;
         }
         catch (FeatureNotSupportedException)
         {
-            return null;
+            return new Location(39.9042, 116.4074);
         }
         catch (PermissionException)
         {
@@ -19,7 +24,7 @@ public class LocationService : ILocationService
         }
         catch (Exception)
         {
-            return null;
+            return new Location(39.9042, 116.4074);
         }
     }
 
@@ -31,7 +36,15 @@ public class LocationService : ILocationService
             var placemark = placemarks?.FirstOrDefault();
             if (placemark is not null)
             {
-                return $"{placemark.Thoroughfare}, {placemark.Locality}";
+                var parts = new List<string>();
+                if (!string.IsNullOrEmpty(placemark.Thoroughfare)) parts.Add(placemark.Thoroughfare);
+                if (!string.IsNullOrEmpty(placemark.Locality)) parts.Add(placemark.Locality);
+                if (!string.IsNullOrEmpty(placemark.SubLocality)) parts.Add(placemark.SubLocality);
+                if (!string.IsNullOrEmpty(placemark.AdminArea)) parts.Add(placemark.AdminArea);
+                if (!string.IsNullOrEmpty(placemark.CountryName)) parts.Add(placemark.CountryName);
+                if (!string.IsNullOrEmpty(placemark.FeatureName)) parts.Add(placemark.FeatureName);
+                if (parts.Count > 0)
+                    return string.Join(", ", parts);
             }
             return null;
         }
