@@ -7,68 +7,104 @@
              Title="Register"
              Shell.NavBarIsVisible="False">
 
-    <ScrollView>
-        <VerticalStackLayout Padding="32" Spacing="24" VerticalOptions="Center">
+    <Grid RowDefinitions="Auto,*">
+        <Grid Grid.Row="0" HeightRequest="140" VerticalOptions="Start">
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="{StaticResource Secondary}" Offset="0" />
+                    <GradientStop Color="{StaticResource SecondaryLight}" Offset="1" />
+                </LinearGradientBrush>
+            </Grid.Background>
+            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="6">
+                <Label Text="&#x1F64C;"
+                       FontSize="36"
+                       HorizontalOptions="Center" />
+                <Label Text="Create Account"
+                       FontSize="28"
+                       FontAttributes="Bold"
+                       FontFamily="OpenSansSemibold"
+                       TextColor="White"
+                       HorizontalOptions="Center"
+                       SemanticProperties.HeadingLevel="Level1" />
+                <Label Text="Join FoodLens today"
+                       FontSize="14"
+                       TextColor="#C8E6C9"
+                       HorizontalOptions="Center" />
+            </VerticalStackLayout>
+        </Grid>
 
-            <Label Text="Create Account"
-                   Style="{StaticResource LabelTitle}"
-                   HorizontalOptions="Center"
-                   TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryLight}}"
-                   SemanticProperties.HeadingLevel="Level1" />
+        <ScrollView Grid.Row="1" Margin="0,-30,0,0">
+            <VerticalStackLayout Padding="32,0,32,32" Spacing="20" VerticalOptions="Start">
 
-            <Frame Style="{StaticResource CardFrame}">
-                <VerticalStackLayout Spacing="16">
-                    <Entry Placeholder="Display Name"
-                           Text="{Binding DisplayName}"
-                           AutomationId="RegisterDisplayNameEntry"
-                           SemanticProperties.Description="Display name"
-                           SemanticProperties.Hint="Enter your display name" />
+                <Frame Style="{StaticResource CardFrame}"
+                       Padding="20">
+                    <VerticalStackLayout Spacing="16">
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="Display Name" Style="{StaticResource LabelCaption}" />
+                            <Entry Placeholder="Enter your name"
+                                   Text="{Binding DisplayName}"
+                                   AutomationId="RegisterDisplayNameEntry"
+                                   SemanticProperties.Description="Display name"
+                                   SemanticProperties.Hint="Enter your display name" />
+                        </VerticalStackLayout>
 
-                    <Entry Placeholder="Email"
-                           Keyboard="Email"
-                           Text="{Binding Email}"
-                           AutomationId="RegisterEmailEntry"
-                           SemanticProperties.Description="Email address"
-                           SemanticProperties.Hint="Enter your email address" />
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="Email" Style="{StaticResource LabelCaption}" />
+                            <Entry Placeholder="Enter your email"
+                                   Keyboard="Email"
+                                   Text="{Binding Email}"
+                                   AutomationId="RegisterEmailEntry"
+                                   SemanticProperties.Description="Email address"
+                                   SemanticProperties.Hint="Enter your email address" />
+                        </VerticalStackLayout>
 
-                    <Entry Placeholder="Password"
-                           IsPassword="True"
-                           Text="{Binding Password}"
-                           AutomationId="RegisterPasswordEntry"
-                           SemanticProperties.Description="Password"
-                           SemanticProperties.Hint="Enter a password (minimum 6 characters)" />
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="Password" Style="{StaticResource LabelCaption}" />
+                            <Entry Placeholder="Create a password"
+                                   IsPassword="True"
+                                   Text="{Binding Password}"
+                                   AutomationId="RegisterPasswordEntry"
+                                   SemanticProperties.Description="Password"
+                                   SemanticProperties.Hint="Enter a password (minimum 6 characters)" />
+                        </VerticalStackLayout>
 
-                    <Entry Placeholder="Confirm Password"
-                           IsPassword="True"
-                           Text="{Binding ConfirmPassword}"
-                           AutomationId="RegisterConfirmPasswordEntry"
-                           SemanticProperties.Description="Confirm password"
-                           SemanticProperties.Hint="Re-enter your password to confirm" />
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="Confirm Password" Style="{StaticResource LabelCaption}" />
+                            <Entry Placeholder="Confirm your password"
+                                   IsPassword="True"
+                                   Text="{Binding ConfirmPassword}"
+                                   AutomationId="RegisterConfirmPasswordEntry"
+                                   SemanticProperties.Description="Confirm password"
+                                   SemanticProperties.Hint="Re-enter your password to confirm" />
+                        </VerticalStackLayout>
 
-                    <Label Text="{Binding ErrorMessage}"
-                           TextColor="{StaticResource Danger}"
-                           FontSize="12"
-                           IsVisible="{Binding HasError}"
-                           AutomationId="RegisterErrorMessage"
-                           SemanticProperties.Description="Registration error message" />
+                        <Label Text="{Binding ErrorMessage}"
+                               TextColor="{StaticResource Danger}"
+                               FontSize="12"
+                               IsVisible="{Binding HasError}"
+                               AutomationId="RegisterErrorMessage"
+                               SemanticProperties.Description="Registration error message" />
 
-                    <Button Text="Register"
-                            Command="{Binding RegisterCommand}"
-                            AutomationId="RegisterButton"
-                            SemanticProperties.Hint="Create your account" />
-                </VerticalStackLayout>
-            </Frame>
+                        <Button Text="Create Account"
+                                Command="{Binding RegisterCommand}"
+                                AutomationId="RegisterButton"
+                                SemanticProperties.Hint="Create your account"
+                                FontSize="16"
+                                HeightRequest="52" />
+                    </VerticalStackLayout>
+                </Frame>
 
-            <Label Text="Already have an account? Login"
-                   HorizontalOptions="Center"
-                   Style="{StaticResource LabelMedium}"
-                   TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryLight}}">
-                <Label.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding GoToLoginCommand}" />
-                </Label.GestureRecognizers>
-            </Label>
+                <Label Text="Already have an account? Login"
+                       HorizontalOptions="Center"
+                       Style="{StaticResource LabelMedium}"
+                       TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryLight}}">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GoToLoginCommand}" />
+                    </Label.GestureRecognizers>
+                </Label>
 
-        </VerticalStackLayout>
-    </ScrollView>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
 
 </ContentPage>

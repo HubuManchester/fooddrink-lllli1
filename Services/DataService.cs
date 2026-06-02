@@ -1,14 +1,22 @@
+using System.Security.Cryptography;
+using System.Text;
 using FoodLens.Models;
 using SQLite;
 
 namespace FoodLens.Services;
 
+/// <summary>
+/// SQLite-based implementation of IDataService providing local database access for recipes, meal plans, categories, and user authentication.
+/// </summary>
 public class DataService : IDataService
 {
     private SQLiteAsyncConnection? _database;
     private List<Recipe> _seedRecipes = new();
     private List<Category> _categories = new();
 
+    /// <summary>
+    /// Initializes the SQLite database connection and creates the required tables if they do not exist.
+    /// </summary>
     public async Task InitializeAsync()
     {
         if (_database is not null) return;
@@ -24,6 +32,9 @@ public class DataService : IDataService
         await LoadSeedDataAsync();
     }
 
+    /// <summary>
+    /// Populates the database with default categories and seed recipes if the recipe table is empty.
+    /// </summary>
     private async Task LoadSeedDataAsync()
     {
         _categories = new List<Category>
@@ -48,6 +59,7 @@ public class DataService : IDataService
             {
                 Id = 1, Title = "Classic Pasta Carbonara",
                 Description = "A creamy Italian pasta dish made with eggs, cheese, pancetta, and black pepper.",
+                ImageUrl = "https://images.services.kitchenstories.io/6glN_4JhpVS9aUiBS7JnGsuDULA=/3840x0/filters:quality(80)/images.kitchenstories.io/wagtailOriginalImages/R2568-photo-final-_0.jpg",
                 Category = "Dinner", CookTimeMinutes = 20, PrepTimeMinutes = 10, Servings = 4,
                 Difficulty = "Medium", Rating = 4.8, Calories = 450,
                 Instructions = new() { "Bring a large pot of salted water to boil and cook spaghetti until al dente.", "While pasta cooks, dice the pancetta and fry in a pan until crispy.", "In a bowl, whisk together eggs, grated Pecorino Romano, and black pepper.", "Drain pasta, reserving 1 cup of pasta water.", "Add pasta to the pancetta pan, remove from heat, and pour in egg mixture.", "Toss quickly, adding pasta water as needed for a creamy consistency.", "Serve immediately with extra cheese and pepper." },
@@ -57,6 +69,7 @@ public class DataService : IDataService
             {
                 Id = 2, Title = "Avocado Toast with Poached Egg",
                 Description = "A nutritious breakfast with creamy avocado, perfectly poached egg on sourdough bread.",
+                ImageUrl = "https://www.onehourrecipes.com/wp-content/uploads/2024/12/u1138841585_Avocado_Toast_with_Poached_Egg_-v_6.1_cba739b4-7f82-413f-b8c1-8dea505f403c_3.webp",
                 Category = "Breakfast", CookTimeMinutes = 10, PrepTimeMinutes = 5, Servings = 2,
                 Difficulty = "Easy", Rating = 4.5, Calories = 320,
                 Instructions = new() { "Toast the sourdough bread until golden brown.", "Halve the avocado, remove pit, and mash with a fork.", "Season avocado with salt, pepper, and lemon juice.", "Bring water to a gentle simmer, add a splash of vinegar.", "Create a whirlpool and gently drop in the egg.", "Poach for 3-4 minutes until whites are set.", "Spread avocado on toast, top with poached egg.", "Season with salt, pepper, and red pepper flakes." },
@@ -66,6 +79,7 @@ public class DataService : IDataService
             {
                 Id = 3, Title = "Chicken Stir Fry",
                 Description = "A quick and healthy stir fry with tender chicken and fresh vegetables.",
+                ImageUrl = "https://www.eatyourselfskinny.com/wp-content/uploads/2021/01/teriyaki-stir-fry-8-scaled.jpg",
                 Category = "Lunch", CookTimeMinutes = 15, PrepTimeMinutes = 10, Servings = 3,
                 Difficulty = "Easy", Rating = 4.6, Calories = 380, IsFavorite = true,
                 Instructions = new() { "Slice chicken breast into thin strips.", "Prepare vegetables: slice bell peppers, broccoli, and carrots.", "Heat oil in a wok over high heat.", "Stir fry chicken until golden, about 5 minutes.", "Remove chicken, add vegetables and stir fry for 3 minutes.", "Return chicken to wok, add soy sauce and oyster sauce.", "Toss everything together for 2 minutes.", "Serve over steamed rice." },
@@ -75,6 +89,7 @@ public class DataService : IDataService
             {
                 Id = 4, Title = "Chocolate Lava Cake",
                 Description = "A decadent dessert with a molten chocolate center that flows when you cut into it.",
+                ImageUrl = "https://insanelygoodrecipes.com/wp-content/uploads/2024/12/Lava-Cake-2.jpg",
                 Category = "Dessert", CookTimeMinutes = 14, PrepTimeMinutes = 15, Servings = 4,
                 Difficulty = "Medium", Rating = 4.9, Calories = 520,
                 Instructions = new() { "Preheat oven to 220°C (425°F). Butter and flour 4 ramekins.", "Melt butter and chocolate together in a double boiler.", "Whisk in sugar and a pinch of salt.", "Add eggs one at a time, whisking well.", "Fold in flour until just combined.", "Divide batter among ramekins.", "Bake for 12-14 minutes until edges are firm but center is soft.", "Let cool 1 minute, then invert onto plates and serve immediately." },
@@ -84,6 +99,7 @@ public class DataService : IDataService
             {
                 Id = 5, Title = "Fresh Berry Smoothie",
                 Description = "A refreshing and healthy smoothie packed with mixed berries and yogurt.",
+                ImageUrl = "https://beamingbaker.com/wp-content/uploads/2017/05/Triple-Berry-Smoothie-5-Ingredient-Paleo-Vegan-Gluten-Free-Dairy-Free-3.jpg",
                 Category = "Drinks", CookTimeMinutes = 0, PrepTimeMinutes = 5, Servings = 2,
                 Difficulty = "Easy", Rating = 4.3, Calories = 180,
                 Instructions = new() { "Add frozen mixed berries to the blender.", "Add Greek yogurt and a splash of milk.", "Add honey for sweetness.", "Blend on high until smooth and creamy.", "Pour into glasses and serve immediately." },
@@ -93,6 +109,7 @@ public class DataService : IDataService
             {
                 Id = 6, Title = "Grilled Salmon with Lemon",
                 Description = "Perfectly grilled salmon fillet with a zesty lemon herb butter.",
+                ImageUrl = "https://www.thecookierookie.com/wp-content/uploads/2023/05/grilled-salmon-recipe-2.jpg",
                 Category = "Dinner", CookTimeMinutes = 15, PrepTimeMinutes = 10, Servings = 2,
                 Difficulty = "Medium", Rating = 4.7, Calories = 420, IsFavorite = true,
                 Instructions = new() { "Season salmon fillets with salt and pepper.", "Mix softened butter with lemon juice, garlic, and herbs.", "Preheat grill to medium-high heat.", "Place salmon skin-side down on the grill.", "Cook for 6-7 minutes per side.", "Top with lemon herb butter before serving.", "Serve with steamed asparagus and rice." },
@@ -107,18 +124,27 @@ public class DataService : IDataService
 
     }
 
+    /// <summary>
+    /// Retrieves all recipes from the database.
+    /// </summary>
     public async Task<List<Recipe>> GetRecipesAsync()
     {
         await InitializeAsync();
         return await _database!.Table<Recipe>().ToListAsync();
     }
 
+    /// <summary>
+    /// Retrieves a recipe by its unique identifier.
+    /// </summary>
     public async Task<Recipe?> GetRecipeByIdAsync(int id)
     {
         await InitializeAsync();
         return await _database!.Table<Recipe>().FirstOrDefaultAsync(r => r.Id == id);
     }
 
+    /// <summary>
+    /// Searches recipes by keyword and optional category filter.
+    /// </summary>
     public async Task<List<Recipe>> SearchRecipesAsync(string keyword, string? category = null)
     {
         await InitializeAsync();
@@ -134,12 +160,18 @@ public class DataService : IDataService
         return recipes;
     }
 
+    /// <summary>
+    /// Retrieves all recipes marked as favorites.
+    /// </summary>
     public async Task<List<Recipe>> GetFavoriteRecipesAsync()
     {
         await InitializeAsync();
         return await _database!.Table<Recipe>().Where(r => r.IsFavorite).ToListAsync();
     }
 
+    /// <summary>
+    /// Toggles the favorite status of a recipe.
+    /// </summary>
     public async Task ToggleFavoriteAsync(int recipeId)
     {
         await InitializeAsync();
@@ -151,18 +183,58 @@ public class DataService : IDataService
         }
     }
 
+    /// <summary>
+    /// Adds a new recipe to the database.
+    /// </summary>
+    public async Task AddRecipeAsync(Recipe recipe)
+    {
+        await InitializeAsync();
+        recipe.CreatedAt = DateTime.Now;
+        await _database!.InsertAsync(recipe);
+    }
+
+    /// <summary>
+    /// Updates an existing recipe in the database.
+    /// </summary>
+    public async Task UpdateRecipeAsync(Recipe recipe)
+    {
+        await InitializeAsync();
+        await _database!.UpdateAsync(recipe);
+    }
+
+    /// <summary>
+    /// Deletes a recipe and its associated meal plans from the database.
+    /// </summary>
+    public async Task DeleteRecipeAsync(int recipeId)
+    {
+        await InitializeAsync();
+        var plans = await _database!.Table<MealPlan>().Where(p => p.RecipeId == recipeId).ToListAsync();
+        foreach (var plan in plans)
+            await _database.DeleteAsync<MealPlan>(plan.Id);
+        await _database.DeleteAsync<Recipe>(recipeId);
+    }
+
+    /// <summary>
+    /// Returns the predefined list of meal categories.
+    /// </summary>
     public async Task<List<Category>> GetCategoriesAsync()
     {
         await InitializeAsync();
         return _categories;
     }
 
+    /// <summary>
+    /// Adds a new meal plan entry to the database.
+    /// </summary>
     public async Task AddMealPlanAsync(MealPlan mealPlan)
     {
         await InitializeAsync();
         await _database!.InsertAsync(mealPlan);
     }
 
+    /// <summary>
+    /// Retrieves all meal plans for a specific date, including their associated recipes.
+    /// </summary>
     public async Task<List<MealPlan>> GetMealPlansAsync(DateTime date)
     {
         await InitializeAsync();
@@ -175,9 +247,84 @@ public class DataService : IDataService
         return plans;
     }
 
+    /// <summary>
+    /// Removes a meal plan entry from the database by its identifier.
+    /// </summary>
     public async Task RemoveMealPlanAsync(int id)
     {
         await InitializeAsync();
         await _database!.DeleteAsync<MealPlan>(id);
+    }
+
+    /// <summary>
+    /// Registers a new user with the specified display name, email, and password.
+    /// </summary>
+    public async Task<(bool Success, string Message, User? User)> RegisterAsync(string displayName, string email, string password)
+    {
+        await InitializeAsync();
+
+        var existing = await _database!.Table<User>().FirstOrDefaultAsync(u => u.Email == email);
+        if (existing is not null)
+            return (false, "This email is already registered.", null);
+
+        var user = new User
+        {
+            Username = email,
+            Email = email,
+            DisplayName = displayName,
+            PasswordHash = HashPassword(password),
+            CreatedAt = DateTime.Now
+        };
+
+        await _database.InsertAsync(user);
+        Preferences.Set("current_user_id", user.Id);
+        return (true, "Registration successful!", user);
+    }
+
+    /// <summary>
+    /// Authenticates a user with the given email and password.
+    /// </summary>
+    public async Task<(bool Success, string Message, User? User)> LoginAsync(string email, string password)
+    {
+        await InitializeAsync();
+
+        var user = await _database!.Table<User>().FirstOrDefaultAsync(u => u.Email == email);
+        if (user is null)
+            return (false, "Email not found.", null);
+
+        if (user.PasswordHash != HashPassword(password))
+            return (false, "Incorrect password.", null);
+
+        Preferences.Set("current_user_id", user.Id);
+        return (true, "Login successful!", user);
+    }
+
+    /// <summary>
+    /// Returns the currently logged-in user, or null if no user is authenticated.
+    /// </summary>
+    public async Task<User?> GetCurrentUserAsync()
+    {
+        await InitializeAsync();
+        var userId = Preferences.Get("current_user_id", -1);
+        if (userId <= 0) return null;
+        return await _database!.Table<User>().FirstOrDefaultAsync(u => u.Id == userId);
+    }
+
+    /// <summary>
+    /// Logs out the current user by clearing the stored user identifier.
+    /// </summary>
+    public Task LogoutAsync()
+    {
+        Preferences.Remove("current_user_id");
+        return Task.CompletedTask;
+    }
+
+    /// <summary>
+    /// Hashes a password using SHA-256 and returns the hexadecimal string representation.
+    /// </summary>
+    private static string HashPassword(string password)
+    {
+        var bytes = SHA256.HashData(Encoding.UTF8.GetBytes(password));
+        return Convert.ToHexString(bytes);
     }
 }

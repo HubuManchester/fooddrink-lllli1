@@ -2,10 +2,16 @@ using System.Threading;
 
 namespace FoodLens.Services;
 
+/// <summary>
+/// Provides text-to-speech functionality using the system TTS engine.
+/// </summary>
 public class SpeechService : ISpeechService
 {
     private CancellationTokenSource? _cts;
 
+    /// <summary>
+    /// Speaks the specified text aloud using the system text-to-speech engine, cancelling any previous speech.
+    /// </summary>
     public async Task SpeakAsync(string text)
     {
         try
@@ -25,6 +31,9 @@ public class SpeechService : ISpeechService
         }
     }
 
+    /// <summary>
+    /// Stops any in-progress text-to-speech playback.
+    /// </summary>
     public Task StopAsync()
     {
         _cts?.Cancel();

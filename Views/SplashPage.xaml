@@ -2,38 +2,69 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FoodLens.Views.SplashPage"
-             BackgroundColor="{StaticResource Primary}"
              NavigationPage.HasNavigationBar="False"
              Shell.NavBarIsVisible="False">
 
-    <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="16">
-        <Label Text="FoodLens"
-               FontSize="48"
-               FontAttributes="Bold"
-               FontFamily="OpenSansSemibold"
-               TextColor="White"
-               HorizontalOptions="Center" />
+    <Grid>
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="{StaticResource Primary}" Offset="0" />
+                <GradientStop Color="{StaticResource Accent}" Offset="1" />
+            </LinearGradientBrush>
+        </Grid.Background>
 
-        <Label Text="Smart Recipe &amp; Meal Planner"
-               FontSize="16"
-               FontFamily="OpenSansRegular"
-               TextColor="#FFE0CC"
-               HorizontalOptions="Center" />
+        <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="0">
+            <Image x:Name="LogoIcon"
+                   Source="appiconfg.svg"
+                   WidthRequest="120"
+                   HeightRequest="120"
+                   HorizontalOptions="Center"
+                   Margin="0,0,0,24"
+                   Opacity="0" />
 
-        <BoxView HeightRequest="1" WidthRequest="80"
-                 BackgroundColor="#FFFFFF40"
-                 HorizontalOptions="Center"
-                 Margin="0,16,0,0" />
+            <Label x:Name="TitleLabel"
+                   Text="FoodLens"
+                   FontSize="48"
+                   FontAttributes="Bold"
+                   FontFamily="OpenSansSemibold"
+                   TextColor="White"
+                   HorizontalOptions="Center"
+                   Opacity="0"
+                   TranslationY="20" />
 
-        <ActivityIndicator IsRunning="True" Color="White" Margin="0,20,0,0"
-                           WidthRequest="32" HeightRequest="32"
-                           HorizontalOptions="Center" />
+            <Label x:Name="SubtitleLabel"
+                   Text="Smart Recipe &amp; Meal Planner"
+                   FontSize="16"
+                   FontFamily="OpenSansRegular"
+                   TextColor="#FFE0CC"
+                   HorizontalOptions="Center"
+                    Margin="0,8,0,0"
+                   Opacity="0"
+                   TranslationY="20" />
 
-        <Label Text="Loading delicious recipes..."
-               FontSize="12"
-               TextColor="#FFFFFFCC"
-               HorizontalOptions="Center"
-               Margin="0,8,0,0" />
-    </VerticalStackLayout>
+            <BoxView x:Name="DividerLine"
+                     HeightRequest="2"
+                     WidthRequest="0"
+                     BackgroundColor="#FFFFFF50"
+                     HorizontalOptions="Center"
+                     Margin="0,24,0,0"
+                     Opacity="0" />
+
+            <ActivityIndicator x:Name="LoadingIndicator"
+                               IsRunning="True" Color="White"
+                               WidthRequest="28" HeightRequest="28"
+                               HorizontalOptions="Center"
+                               Margin="0,28,0,0"
+                               Opacity="0" />
+
+            <Label x:Name="LoadingLabel"
+                   Text="Loading delicious recipes..."
+                   FontSize="12"
+                   TextColor="#FFFFFFCC"
+                   HorizontalOptions="Center"
+                   Margin="0,10,0,0"
+                   Opacity="0" />
+        </VerticalStackLayout>
+    </Grid>
 
 </ContentPage>

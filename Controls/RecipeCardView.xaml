@@ -6,9 +6,9 @@
              x:Name="This">
 
     <Frame Style="{StaticResource CardFrame}"
-           Margin="0,6"
+           Margin="4,6"
            Padding="0"
-           HeightRequest="180"
+           IsClippedToBounds="True"
            AutomationId="RecipeCard"
            SemanticProperties.Description="{Binding Source={x:Reference This}, Path=RecipeTitle}"
            SemanticProperties.Hint="Tap to view recipe details">
@@ -17,69 +17,86 @@
                                   CommandParameter="{Binding Source={x:Reference This}, Path=RecipeId}" />
         </Frame.GestureRecognizers>
 
-        <Grid RowDefinitions="Auto,*,Auto" ColumnDefinitions="Auto,*,Auto"
-              Padding="16" RowSpacing="4">
+        <Grid ColumnDefinitions="2*,3*" HeightRequest="160" IsClippedToBounds="True">
 
-            <Image Grid.Row="0" Grid.Column="0"
-                   Source="{Binding Source={x:Reference This}, Path=ImageUrl}"
-                   WidthRequest="40" HeightRequest="40"
-                   VerticalOptions="Start"
-                   IsVisible="{Binding Source={x:Reference This}, Path=ImageUrl, Converter={StaticResource StringNotEmptyConverter}}"
-                   SemanticProperties.Description="Recipe thumbnail">
-                <Image.Aspect>
-                    <Aspect>AspectFill</Aspect>
-                </Image.Aspect>
-            </Image>
+            <Grid Grid.Column="0" IsClippedToBounds="True">
+                <Grid IsVisible="{Binding Source={x:Reference This}, Path=ImageUrl, Converter={StaticResource StringEmptyConverter}}">
+                    <Grid.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="{StaticResource PrimaryLight}" Offset="0" />
+                            <GradientStop Color="{StaticResource Primary}" Offset="1" />
+                        </LinearGradientBrush>
+                    </Grid.Background>
+                    <Label Text="&#x1F373;"
+                           FontSize="32"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           Opacity="0.6" />
+                </Grid>
 
-            <Label Grid.Row="0" Grid.Column="1"
-                   Text="{Binding Source={x:Reference This}, Path=RecipeTitle}"
-                   Style="{StaticResource LabelLarge}"
-                   LineBreakMode="TailTruncation"
-                   MaximumHeightRequest="52"
-                   Margin="8,0,0,0" />
+                <Image Source="{Binding Source={x:Reference This}, Path=ImageUrl}"
+                       Aspect="AspectFill"
+                       IsVisible="{Binding Source={x:Reference This}, Path=ImageUrl, Converter={StaticResource StringNotEmptyConverter}}"
+                       SemanticProperties.Description="Recipe thumbnail" />
+            </Grid>
 
-            <Image Grid.Row="0" Grid.Column="2"
-                    Source="{Binding Source={x:Reference This}, Path=FavoriteIcon}"
-                    WidthRequest="24" HeightRequest="24"
-                    MinimumWidthRequest="44" MinimumHeightRequest="44"
-                    VerticalOptions="Start"
-                    HorizontalOptions="End"
-                    SemanticProperties.Description="Toggle favorite">
-                <Image.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding Source={x:Reference This}, Path=FavoriteCommand}"
-                                          CommandParameter="{Binding Source={x:Reference This}, Path=RecipeId}" />
-                </Image.GestureRecognizers>
-            </Image>
+            <VerticalStackLayout Grid.Column="1" Padding="12,10,12,10" Spacing="4" VerticalOptions="Fill">
+                <Label Text="{Binding Source={x:Reference This}, Path=RecipeTitle}"
+                       Style="{StaticResource LabelLarge}"
+                       FontSize="15"
+                       LineBreakMode="TailTruncation"
+                       MaxLines="2"
+                       VerticalOptions="Start" />
 
-            <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"
-                   Text="{Binding Source={x:Reference This}, Path=RecipeDescription}"
-                   Style="{StaticResource LabelBody}"
-                   LineBreakMode="TailTruncation"
-                   MaxLines="2"
-                   VerticalOptions="Start" />
+                <Label Text="{Binding Source={x:Reference This}, Path=RecipeDescription}"
+                       Style="{StaticResource LabelBody}"
+                       LineBreakMode="TailTruncation"
+                       MaxLines="2"
+                       FontSize="12"
+                       VerticalOptions="Start" />
 
-            <HorizontalStackLayout Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3"
-                                   Spacing="16" VerticalOptions="End">
-                <HorizontalStackLayout Spacing="4">
-                    <Label Text="&#x1F552;"
-                           FontSize="12"
-                           VerticalOptions="Center" />
-                    <Label Text="{Binding Source={x:Reference This}, Path=CookTime, StringFormat='{0} min'}"
-                           Style="{StaticResource LabelSmall}" VerticalOptions="Center" />
-                </HorizontalStackLayout>
+                <Grid ColumnDefinitions="Auto,Auto,Auto" VerticalOptions="End" Margin="0,4,0,0" HorizontalOptions="Fill">
+                    <HorizontalStackLayout Grid.Column="0" Spacing="3">
+                        <Label Text="&#x1F552;" FontSize="10" VerticalOptions="Center" />
+                        <Label Text="{Binding Source={x:Reference This}, Path=CookTime, StringFormat='{0} min'}"
+                               Style="{StaticResource LabelSmall}" FontSize="11" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
 
-                <Label Text="{Binding Source={x:Reference This}, Path=Difficulty}"
-                       Style="{StaticResource LabelSmall}" VerticalOptions="Center" />
+                    <Label Grid.Column="1" Text="{Binding Source={x:Reference This}, Path=Difficulty}"
+                           Style="{StaticResource LabelSmall}" FontSize="11" VerticalOptions="Center" Margin="8,0,0,0" />
 
-                <Label Text="{Binding Source={x:Reference This}, Path=Calories, StringFormat='{0} cal'}"
-                       Style="{StaticResource LabelSmall}" VerticalOptions="Center" />
+                    <Label Grid.Column="2" Text="{Binding Source={x:Reference This}, Path=Calories, StringFormat='{0} cal'}"
+                           Style="{StaticResource LabelSmall}" FontSize="11" VerticalOptions="Center" Margin="8,0,0,0" />
+                </Grid>
 
-                <Label Text="{Binding Source={x:Reference This}, Path=Category}"
-                       Style="{StaticResource LabelCaption}"
-                       TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryLight}}"
-                       VerticalOptions="Center" />
-            </HorizontalStackLayout>
+                <Grid ColumnDefinitions="*,Auto" VerticalOptions="End">
+                    <Frame Grid.Column="0" CornerRadius="8"
+                           BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                           BorderColor="Transparent"
+                           Padding="6,2"
+                           HasShadow="False"
+                           HeightRequest="22"
+                           HorizontalOptions="Start"
+                           IsVisible="{Binding Source={x:Reference This}, Path=Category, Converter={StaticResource StringNotEmptyConverter}}">
+                        <Label Text="{Binding Source={x:Reference This}, Path=Category}"
+                               FontSize="10"
+                               FontAttributes="Bold"
+                               TextColor="White" />
+                    </Frame>
 
+                    <Image Grid.Column="1" Source="{Binding Source={x:Reference This}, Path=FavoriteIcon}"
+                           WidthRequest="22" HeightRequest="22"
+                           MinimumWidthRequest="44" MinimumHeightRequest="44"
+                           HorizontalOptions="End"
+                           VerticalOptions="Center"
+                           SemanticProperties.Description="Toggle favorite">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Source={x:Reference This}, Path=FavoriteCommand}"
+                                                  CommandParameter="{Binding Source={x:Reference This}, Path=RecipeId}" />
+                        </Image.GestureRecognizers>
+                    </Image>
+                </Grid>
+            </VerticalStackLayout>
         </Grid>
     </Frame>
 

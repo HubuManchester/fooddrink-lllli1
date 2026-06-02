@@ -15,27 +15,75 @@
             <ScrollView>
                 <VerticalStackLayout Padding="{StaticResource PaddingPage}" Spacing="{StaticResource SpacingLarge}">
 
-                    <VerticalStackLayout Spacing="4" Margin="0,0,0,8">
-                        <Label Text="Welcome to FoodLens!"
-                               Style="{StaticResource LabelHeadline}"
-                               HorizontalOptions="Start"
-                               SemanticProperties.HeadingLevel="Level1" />
-                        <Label Text="{Binding LocationGreeting}"
-                               Style="{StaticResource LabelCaption}"
-                               HorizontalOptions="Start"
-                               IsVisible="{Binding LocationGreeting, Converter={StaticResource StringNotEmptyConverter}}"
-                               SemanticProperties.Description="Your current location" />
-                        <Label Text="Discover delicious recipes for every meal"
-                               Style="{StaticResource LabelBody}"
-                               HorizontalOptions="Start" />
-                    </VerticalStackLayout>
+                    <Grid ColumnDefinitions="*,Auto" Margin="0,4,0,0">
+                        <VerticalStackLayout Grid.Column="0" Spacing="6">
+                            <Label Text="Welcome to FoodLens! &#x1F44B;"
+                                   Style="{StaticResource LabelHeadline}"
+                                   FontSize="26"
+                                   HorizontalOptions="Start"
+                                   SemanticProperties.HeadingLevel="Level1" />
+                            <Label Text="{Binding LocationGreeting}"
+                                   Style="{StaticResource LabelSmall}"
+                                   TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryLight}}"
+                                   HorizontalOptions="Start"
+                                   IsVisible="{Binding LocationGreeting, Converter={StaticResource StringNotEmptyConverter}}"
+                                   SemanticProperties.Description="Your current location" />
+                             <Label Text="Discover delicious recipes for every meal"
+                                    Style="{StaticResource LabelBody}"
+                                    HorizontalOptions="Start" />
+                             <Label Text="{Binding ShakeHint}"
+                                    Style="{StaticResource LabelCaption}"
+                                    TextColor="{AppThemeBinding Light={StaticResource Secondary}, Dark={StaticResource SecondaryDark}}"
+                                    HorizontalOptions="Start"
+                                    IsVisible="{Binding ShakeHint, Converter={StaticResource StringNotEmptyConverter}}" />
+                             <Button Text="&#x1F914; Surprise Me!"
+                                     Command="{Binding SimulateShakeCommand}"
+                                     Style="{StaticResource ButtonSecondary}"
+                                     FontSize="13"
+                                     Padding="16,8"
+                                     IsVisible="{Binding ShakeHint, Converter={StaticResource StringNotEmptyConverter}}" />
+                        </VerticalStackLayout>
 
-                    <VerticalStackLayout Spacing="{StaticResource SpacingSmall}">
-                        <Label Text="Featured Recipes"
-                               Style="{StaticResource LabelSectionHeader}"
-                               SemanticProperties.HeadingLevel="Level2" />
+                        <Frame Grid.Column="1"
+                               IsVisible="{Binding IsLoggedIn}"
+                               Padding="14,10"
+                               CornerRadius="16"
+                               HasShadow="False"
+                               BorderColor="Transparent"
+                               BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                               VerticalOptions="Start"
+                               Margin="8,4,0,0">
+                            <VerticalStackLayout>
+                                <Label Text="&#x1F464;"
+                                       FontSize="20"
+                                       TextColor="White"
+                                       HorizontalOptions="Center" />
+                                <Label Text="{Binding UserGreeting}"
+                                       FontSize="11"
+                                       TextColor="White"
+                                       HorizontalOptions="Center"
+                                       LineBreakMode="TailTruncation"
+                                       MaxLines="2" />
+                            </VerticalStackLayout>
+                        </Frame>
+                    </Grid>
 
-                        <CollectionView ItemsSource="{Binding FeaturedRecipes}"
+                     <VerticalStackLayout Spacing="{StaticResource SpacingSmall}">
+                         <Grid ColumnDefinitions="*,Auto">
+                             <Label Grid.Column="0" Text="Featured Recipes"
+                                    Style="{StaticResource LabelSectionHeader}"
+                                    SemanticProperties.HeadingLevel="Level2" />
+                             <Button Grid.Column="1" Text="+ New Recipe"
+                                     Command="{Binding CreateRecipeCommand}"
+                                     Style="{StaticResource ButtonSecondary}"
+                                     FontSize="13"
+                                     Padding="14,8"
+                                     CornerRadius="20"
+                                     SemanticProperties.Hint="Create a new recipe" />
+                         </Grid>
+
+                        <CollectionView x:Name="FeaturedRecipesCollectionView"
+                                        ItemsSource="{Binding FeaturedRecipes}"
                                         AutomationId="FeaturedRecipesList"
                                         SemanticProperties.Description="Featured recipes list">
                             <CollectionView.ItemTemplate>
@@ -44,14 +92,14 @@
                                         RecipeId="{Binding Id}"
                                         RecipeTitle="{Binding Title}"
                                         RecipeDescription="{Binding Description}"
-                                        CookTime="{Binding CookTimeMinutes}"
+                                        CookTime="{Binding TotalTimeMinutes}"
                                         Difficulty="{Binding Difficulty}"
                                         Calories="{Binding Calories}"
                                         Category="{Binding Category}"
                                         IsFavorite="{Binding IsFavorite}"
                                         ImageUrl="{Binding ImageUrl}"
                                         TapCommand="{Binding Source={RelativeSource AncestorType={x:Type vm:HomePageViewModel}}, Path=NavigateToRecipeCommand}"
-                                        FavoriteCommand="{Binding Source={RelativeSource AncestorType={x:Type vm:HomePageViewModel}}, Path=ToggleFavoriteCommand}" />
+                                        FavoriteCommand="{Binding Source={RelativeSource AncestorType={x:Type vm:HomePageViewModel}}, Path=ToggleHomeFavoriteCommand}" />
                                 </DataTemplate>
                             </CollectionView.ItemTemplate>
                         </CollectionView>
@@ -68,6 +116,34 @@
                            SemanticProperties.Description="Loading recipes"
                            HorizontalOptions="Center"
                            Margin="0,8" />
+
+        <!-- Splash overlay -->
+        <Grid x:Name="SplashOverlay" Grid.RowSpan="2" IsVisible="False" ZIndex="999">
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="{StaticResource Primary}" Offset="0" />
+                    <GradientStop Color="{StaticResource Secondary}" Offset="1" />
+                </LinearGradientBrush>
+            </Grid.Background>
+            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="0">
+                <Image Source="appiconfg.svg"
+                       WidthRequest="100" HeightRequest="100"
+                       HorizontalOptions="Center"
+                       Margin="0,0,0,20"
+                       x:Name="SplashLogo"
+                       Opacity="0" />
+                <Label Text="FoodLens" FontSize="42" FontAttributes="Bold"
+                       TextColor="White" HorizontalOptions="Center"
+                       x:Name="SplashTitle" Opacity="0" TranslationY="20" />
+                <Label Text="Smart Recipe &amp; Meal Planner" FontSize="14"
+                       TextColor="#FFE0CC" HorizontalOptions="Center" Margin="0,6,0,0"
+                       x:Name="SplashSubtitle" Opacity="0" TranslationY="20" />
+                <ActivityIndicator IsRunning="True" Color="White"
+                                   WidthRequest="24" HeightRequest="24"
+                                   HorizontalOptions="Center" Margin="0,24,0,0"
+                                   x:Name="SplashSpinner" Opacity="0" />
+            </VerticalStackLayout>
+        </Grid>
     </Grid>
 
 </ContentPage>

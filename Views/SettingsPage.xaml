@@ -9,57 +9,126 @@
     <ScrollView>
         <VerticalStackLayout Padding="{StaticResource PaddingPage}" Spacing="{StaticResource SpacingMedium}">
 
-            <Label Text="Settings"
+            <Label Text="&#x2699;&#xFE0F; Settings"
                    Style="{StaticResource LabelSectionHeader}"
+                   FontSize="24"
                    SemanticProperties.HeadingLevel="Level1" />
 
-            <Frame Style="{StaticResource CardFrame}">
-                <VerticalStackLayout Spacing="20">
-                    <Label Text="Appearance"
+             <Frame Style="{StaticResource CardFrame}" Padding="20">
+                 <VerticalStackLayout Spacing="16">
+                     <Label Text="&#x1F464; Account"
+                            Style="{StaticResource LabelLarge}"
+                            SemanticProperties.HeadingLevel="Level2" />
+
+                     <Label Text="Not logged in"
+                            Style="{StaticResource LabelBody}"
+                            IsVisible="{Binding IsLoggedIn, Converter={StaticResource BoolToInverse}}" />
+
+                     <HorizontalStackLayout Spacing="16" IsVisible="{Binding IsLoggedIn}">
+                         <Frame CornerRadius="24"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                                WidthRequest="48" HeightRequest="48"
+                                HasShadow="False"
+                                BorderColor="Transparent"
+                                VerticalOptions="Center">
+                             <Label Text="&#x1F464;" FontSize="22" TextColor="White"
+                                    HorizontalOptions="Center" VerticalOptions="Center" />
+                         </Frame>
+                         <VerticalStackLayout VerticalOptions="Center" Spacing="2">
+                             <Label Text="{Binding UserDisplayName}" Style="{StaticResource LabelMedium}"
+                                    FontAttributes="Bold" />
+                             <Label Text="{Binding UserEmail}" Style="{StaticResource LabelCaption}" />
+                         </VerticalStackLayout>
+                     </HorizontalStackLayout>
+                 </VerticalStackLayout>
+             </Frame>
+
+             <Frame Style="{StaticResource CardFrame}" Padding="20">
+                 <VerticalStackLayout Spacing="20">
+                     <Label Text="&#x1F3A8; Appearance"
                            Style="{StaticResource LabelLarge}"
                            SemanticProperties.HeadingLevel="Level2" />
 
-                    <HorizontalStackLayout Spacing="16" VerticalOptions="Center">
-                        <Label Text="Dark Mode"
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="16">
+                        <Label Grid.Column="0" Text="Dark Mode"
                                Style="{StaticResource LabelMedium}"
-                               VerticalOptions="Center"
-                               HorizontalOptions="FillAndExpand" />
-                        <Switch x:Name="DarkModeSwitch"
+                               VerticalOptions="Center" />
+                        <Switch Grid.Column="1" x:Name="DarkModeSwitch"
                                 AutomationId="DarkModeSwitch"
                                 SemanticProperties.Description="Toggle dark mode"
                                 SemanticProperties.Hint="Switch between light and dark theme" />
-                    </HorizontalStackLayout>
+                    </Grid>
+
+                    <BoxView HeightRequest="1"
+                             BackgroundColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray600}}" />
+
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="16">
+                        <Label Grid.Column="0" Text="Font Size"
+                               Style="{StaticResource LabelMedium}"
+                               VerticalOptions="Center" />
+                        <Picker Grid.Column="1" ItemsSource="{Binding FontSizeOptions}"
+                                SelectedIndex="{Binding FontSizeSetting}"
+                                AutomationId="FontSizePicker"
+                                SemanticProperties.Description="Select font size"
+                                SemanticProperties.Hint="Choose between small, medium, and large text" />
+                    </Grid>
+
+                    <Frame Style="{StaticResource CardFrameFlat}"
+                           BackgroundColor="{AppThemeBinding Light=#FFF8F0, Dark=#1A1A2E}"
+                           Padding="12"
+                           CornerRadius="10">
+                        <Label Text="Preview: The quick brown fox jumps over the lazy dog."
+                               Style="{StaticResource LabelBody}" />
+                    </Frame>
                 </VerticalStackLayout>
             </Frame>
 
-            <Frame Style="{StaticResource CardFrame}">
-                <VerticalStackLayout Spacing="12">
-                    <Label Text="Location"
+            <Frame Style="{StaticResource CardFrame}" Padding="20">
+                <VerticalStackLayout Spacing="16">
+                    <Label Text="&#x1F4CD; Location"
                            Style="{StaticResource LabelLarge}"
                            SemanticProperties.HeadingLevel="Level2" />
                     <Label Text="{Binding LocationStatus}"
                            Style="{StaticResource LabelBody}" />
-                    <Button Text="Get My Location"
+                    <Button Text="&#x1F4CD; Get My Location"
                             Command="{Binding GetLocationCommand}"
                             AutomationId="GetLocationButton"
                             SemanticProperties.Hint="Get your current geographic location"
-                            Style="{StaticResource ButtonOutline}" />
+                            Style="{StaticResource ButtonOutline}"
+                            HeightRequest="48" />
                     <Label Text="{Binding LocationDisplay}"
                            Style="{StaticResource LabelCaption}"
                            IsVisible="{Binding HasLocation}"
                            SemanticProperties.Description="Current location" />
+                    <Frame Style="{StaticResource CardFrameFlat}"
+                           Padding="0"
+                           CornerRadius="12"
+                           IsClippedToBounds="True"
+                           IsVisible="{Binding HasMap}">
+                        <WebView HeightRequest="250"
+                                 Source="{Binding MapSource}"
+                                 SemanticProperties.Description="Map showing your location" />
+                    </Frame>
+                    <Button Text="&#x1F5FA;&#xFE0F; Open in Google Maps"
+                            Command="{Binding OpenInMapsCommand}"
+                            IsVisible="{Binding HasLocation}"
+                            Style="{StaticResource ButtonSecondary}"
+                            HeightRequest="48"
+                            SemanticProperties.Hint="Open your location in Google Maps" />
                 </VerticalStackLayout>
             </Frame>
 
-            <Frame Style="{StaticResource CardFrame}">
-                <VerticalStackLayout Spacing="12">
-                    <Label Text="About"
+            <Frame Style="{StaticResource CardFrame}" Padding="20">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="&#x2139;&#xFE0F; About"
                            Style="{StaticResource LabelLarge}"
                            SemanticProperties.HeadingLevel="Level2" />
                     <Label Text="FoodLens v1.0" Style="{StaticResource LabelBody}" />
                     <Label Text="Smart Recipe &amp; Meal Planner" Style="{StaticResource LabelCaption}" />
                 </VerticalStackLayout>
             </Frame>
+
+            <BoxView HeightRequest="16" BackgroundColor="Transparent" />
 
         </VerticalStackLayout>
     </ScrollView>

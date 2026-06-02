@@ -7,61 +7,86 @@
              Title="Login"
              Shell.NavBarIsVisible="False">
 
-    <ScrollView>
-        <VerticalStackLayout Padding="32" Spacing="24" VerticalOptions="Center">
-
-            <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
+    <Grid RowDefinitions="Auto,*">
+        <Grid Grid.Row="0" HeightRequest="180" VerticalOptions="Start">
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="{StaticResource Primary}" Offset="0" />
+                    <GradientStop Color="{StaticResource PrimaryLight}" Offset="1" />
+                </LinearGradientBrush>
+            </Grid.Background>
+            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="8">
+                <Label Text="&#x1F373;"
+                       FontSize="40"
+                       HorizontalOptions="Center" />
                 <Label Text="FoodLens"
-                       Style="{StaticResource LabelDisplay}"
-                       TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryLight}}"
+                       FontSize="32"
+                       FontAttributes="Bold"
+                       FontFamily="OpenSansSemibold"
+                       TextColor="White"
                        HorizontalOptions="Center"
                        SemanticProperties.HeadingLevel="Level1" />
-
                 <Label Text="Sign in to your account"
-                       Style="{StaticResource LabelBody}"
+                       FontSize="14"
+                       TextColor="#FFE0CC"
                        HorizontalOptions="Center" />
             </VerticalStackLayout>
+        </Grid>
 
-            <Frame Style="{StaticResource CardFrame}" Margin="0,8,0,0">
-                <VerticalStackLayout Spacing="16">
-                    <Entry Placeholder="Email"
-                           Keyboard="Email"
-                           Text="{Binding Email}"
-                           AutomationId="LoginEmailEntry"
-                           SemanticProperties.Description="Email address"
-                           SemanticProperties.Hint="Enter your email address" />
+        <ScrollView Grid.Row="1" Margin="0,-30,0,0">
+            <VerticalStackLayout Padding="32,0,32,32" Spacing="20" VerticalOptions="Start">
 
-                    <Entry Placeholder="Password"
-                           IsPassword="True"
-                           Text="{Binding Password}"
-                           AutomationId="LoginPasswordEntry"
-                           SemanticProperties.Description="Password"
-                           SemanticProperties.Hint="Enter your password" />
+                <Frame Style="{StaticResource CardFrame}"
+                       Margin="0,0,0,8"
+                       Padding="20">
+                    <VerticalStackLayout Spacing="16">
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="Email" Style="{StaticResource LabelCaption}" />
+                            <Entry Placeholder="Enter your email"
+                                   Keyboard="Email"
+                                   Text="{Binding Email}"
+                                   AutomationId="LoginEmailEntry"
+                                   SemanticProperties.Description="Email address"
+                                   SemanticProperties.Hint="Enter your email address" />
+                        </VerticalStackLayout>
 
-                    <Label Text="{Binding ErrorMessage}"
-                           TextColor="{StaticResource Danger}"
-                           FontSize="12"
-                           IsVisible="{Binding HasError}"
-                           AutomationId="LoginErrorMessage"
-                           SemanticProperties.Description="Login error message" />
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="Password" Style="{StaticResource LabelCaption}" />
+                            <Entry Placeholder="Enter your password"
+                                   IsPassword="True"
+                                   Text="{Binding Password}"
+                                   AutomationId="LoginPasswordEntry"
+                                   SemanticProperties.Description="Password"
+                                   SemanticProperties.Hint="Enter your password" />
+                        </VerticalStackLayout>
 
-                    <Button Text="Login"
-                            Command="{Binding LoginCommand}"
-                            AutomationId="LoginButton"
-                            SemanticProperties.Hint="Sign in to your account" />
-                </VerticalStackLayout>
-            </Frame>
+                        <Label Text="{Binding ErrorMessage}"
+                               TextColor="{StaticResource Danger}"
+                               FontSize="12"
+                               IsVisible="{Binding HasError}"
+                               AutomationId="LoginErrorMessage"
+                               SemanticProperties.Description="Login error message" />
 
-            <Label Text="Don't have an account? Register"
-                   HorizontalOptions="Center"
-                   Style="{StaticResource LabelMedium}"
-                   TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryLight}}">
-                <Label.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding GoToRegisterCommand}" />
-                </Label.GestureRecognizers>
-            </Label>
+                        <Button Text="Sign In"
+                                Command="{Binding LoginCommand}"
+                                AutomationId="LoginButton"
+                                SemanticProperties.Hint="Sign in to your account"
+                                FontSize="16"
+                                HeightRequest="52" />
+                    </VerticalStackLayout>
+                </Frame>
 
-        </VerticalStackLayout>
-    </ScrollView>
+                <Label Text="Don't have an account? Register"
+                       HorizontalOptions="Center"
+                       Style="{StaticResource LabelMedium}"
+                       TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryLight}}">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GoToRegisterCommand}" />
+                    </Label.GestureRecognizers>
+                </Label>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
 
 </ContentPage>

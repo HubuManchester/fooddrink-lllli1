@@ -5,18 +5,33 @@
              Title="About">
 
     <ScrollView>
-        <VerticalStackLayout Padding="{StaticResource PaddingLarge}" Spacing="24"
+        <VerticalStackLayout Padding="{StaticResource PaddingLarge}" Spacing="0"
                              VerticalOptions="Center" HorizontalOptions="Center">
 
-            <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
+            <Frame CornerRadius="28"
+                   BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                   WidthRequest="96" HeightRequest="96"
+                   HasShadow="True"
+                   BorderColor="Transparent"
+                   HorizontalOptions="Center"
+                   Margin="0,0,0,16">
+                <Label Text="&#x1F373;"
+                       FontSize="44"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center" />
+            </Frame>
+
+            <VerticalStackLayout Spacing="6" HorizontalOptions="Center" Margin="0,0,0,8">
                 <Label Text="FoodLens"
                        Style="{StaticResource LabelDisplay}"
+                       FontSize="36"
                        TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryLight}}"
                        HorizontalOptions="Center"
                        SemanticProperties.HeadingLevel="Level1" />
 
                 <Label Text="Smart Recipe &amp; Meal Planner"
                        Style="{StaticResource LabelLarge}"
+                       FontSize="18"
                        TextColor="{AppThemeBinding Light={StaticResource TextSecondary}, Dark={StaticResource Gray300}}"
                        HorizontalOptions="Center"
                        SemanticProperties.HeadingLevel="Level2" />
@@ -26,23 +41,51 @@
                        HorizontalOptions="Center" />
             </VerticalStackLayout>
 
-            <BoxView HeightRequest="1"
+            <BoxView HeightRequest="2"
                      BackgroundColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray600}}"
                      WidthRequest="200"
-                     HorizontalOptions="Center" />
+                     HorizontalOptions="Center"
+                     Margin="0,20"
+                     CornerRadius="1" />
 
-            <Label Text="FoodLens helps you discover delicious recipes, plan your meals, and make the most of your ingredients with smart recognition."
-                   Style="{StaticResource LabelMedium}"
+            <Frame Style="{StaticResource CardFrame}"
+                   MaximumWidthRequest="360"
                    HorizontalOptions="Center"
-                   HorizontalTextAlignment="Center"
-                   LineBreakMode="WordWrap"
-                   Margin="0,8,0,0" />
+                   Padding="20"
+                   Margin="0,0,0,16">
+                <Label Text="FoodLens helps you discover delicious recipes, plan your meals, and make the most of your ingredients with smart recognition."
+                       Style="{StaticResource LabelMedium}"
+                       HorizontalOptions="Center"
+                       HorizontalTextAlignment="Center"
+                       LineBreakMode="WordWrap" />
+            </Frame>
+
+            <VerticalStackLayout Spacing="12" HorizontalOptions="Center" Margin="0,8,0,0">
+                <HorizontalStackLayout Spacing="12" HorizontalOptions="Center">
+                    <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                        <Label Text="&#x1F4D6;" FontSize="24" HorizontalOptions="Center" />
+                        <Label Text="Recipes" Style="{StaticResource LabelSmall}" HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                        <Label Text="&#x1F4C5;" FontSize="24" HorizontalOptions="Center" />
+                        <Label Text="Meal Plans" Style="{StaticResource LabelSmall}" HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                        <Label Text="&#x1F4F7;" FontSize="24" HorizontalOptions="Center" />
+                        <Label Text="Scan Food" Style="{StaticResource LabelSmall}" HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                        <Label Text="&#x1F3A4;" FontSize="24" HorizontalOptions="Center" />
+                        <Label Text="Voice Input" Style="{StaticResource LabelSmall}" HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
 
             <Label Text="Built with .NET MAUI"
                    Style="{StaticResource LabelSmall}"
                    TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryLight}}"
                    HorizontalOptions="Center"
-                   Margin="0,16,0,0" />
+                   Margin="0,24,0,0" />
 
         </VerticalStackLayout>
     </ScrollView>

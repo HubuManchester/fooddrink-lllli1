@@ -13,8 +13,9 @@
                      Command="{Binding LoadCategoriesCommand}"
                      IsRefreshing="{Binding IsRefreshing}">
             <VerticalStackLayout Padding="{StaticResource PaddingPage}" Spacing="{StaticResource SpacingMedium}">
-                <Label Text="Browse Categories"
+                <Label Text="&#x1F4D6; Browse Categories"
                        Style="{StaticResource LabelSectionHeader}"
+                       FontSize="24"
                        SemanticProperties.HeadingLevel="Level1" />
 
                 <CollectionView ItemsSource="{Binding Categories}"
@@ -31,7 +32,7 @@
                                 CategoryName="{Binding Name}"
                                 ChipIcon="{Binding Icon}"
                                 ChipColor="{Binding Color}"
-                                HeightRequest="80"
+                                HeightRequest="100"
                                 TapCommand="{Binding Source={RelativeSource AncestorType={x:Type vm:CategoryListViewModel}}, Path=NavigateToCategoryCommand}" />
                         </DataTemplate>
                     </CollectionView.ItemTemplate>

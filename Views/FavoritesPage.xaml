@@ -13,11 +13,13 @@
                      Command="{Binding LoadFavoritesCommand}"
                      IsRefreshing="{Binding IsRefreshing}">
             <VerticalStackLayout Padding="{StaticResource PaddingPage}" Spacing="{StaticResource SpacingMedium}">
-                <Label Text="Your Favorites"
+                <Label Text="&#x2764;&#xFE0F; Your Favorites"
                        Style="{StaticResource LabelSectionHeader}"
+                       FontSize="24"
                        SemanticProperties.HeadingLevel="Level1" />
 
-                <CollectionView ItemsSource="{Binding FavoriteRecipes}"
+                <CollectionView x:Name="FavoritesCollectionView"
+                                ItemsSource="{Binding FavoriteRecipes}"
                                 AutomationId="FavoritesList"
                                 SemanticProperties.Description="Your favorite recipes">
                     <CollectionView.ItemTemplate>
@@ -26,7 +28,7 @@
                                 RecipeId="{Binding Id}"
                                 RecipeTitle="{Binding Title}"
                                 RecipeDescription="{Binding Description}"
-                                CookTime="{Binding CookTimeMinutes}"
+                                CookTime="{Binding TotalTimeMinutes}"
                                 Difficulty="{Binding Difficulty}"
                                 Calories="{Binding Calories}"
                                 Category="{Binding Category}"
@@ -38,12 +40,21 @@
                     </CollectionView.ItemTemplate>
                 </CollectionView>
 
-                <Label Text="No favorites yet. Tap the heart on a recipe to save it here."
-                       IsVisible="{Binding IsEmpty}"
-                       HorizontalOptions="Center"
-                       Style="{StaticResource LabelBody}"
-                       Margin="0,32,0,0"
-                       SemanticProperties.Description="No favorites yet" />
+                <VerticalStackLayout IsVisible="{Binding IsEmpty}"
+                                     HorizontalOptions="Center"
+                                     VerticalOptions="Center"
+                                     Spacing="12"
+                                     Margin="0,48,0,0">
+                    <Label Text="&#x1F49B;"
+                           FontSize="48"
+                           HorizontalOptions="Center" />
+                    <Label Text="No favorites yet. Tap the heart on a recipe to save it here."
+                           IsVisible="{Binding IsEmpty}"
+                           HorizontalOptions="Center"
+                           Style="{StaticResource LabelBody}"
+                           HorizontalTextAlignment="Center"
+                           SemanticProperties.Description="No favorites yet" />
+                </VerticalStackLayout>
             </VerticalStackLayout>
         </RefreshView>
 

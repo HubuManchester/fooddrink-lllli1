@@ -8,18 +8,19 @@
              Title="Meal Plan">
 
     <Grid>
-        <Grid RowDefinitions="*,Auto" Grid.Row="0">
+        <Grid RowDefinitions="*,Auto">
             <RefreshView Grid.Row="0"
                          Command="{Binding LoadMealPlansCommand}"
                          IsRefreshing="{Binding IsRefreshing}">
                 <ScrollView>
                     <VerticalStackLayout Padding="{StaticResource PaddingPage}" Spacing="{StaticResource SpacingMedium}">
 
-                        <Label Text="Meal Planner"
+                        <Label Text="&#x1F4C5; Meal Planner"
                                Style="{StaticResource LabelSectionHeader}"
+                               FontSize="24"
                                SemanticProperties.HeadingLevel="Level1" />
 
-                        <Frame Style="{StaticResource CardFrame}">
+                        <Frame Style="{StaticResource CardFrame}" Padding="16">
                             <VerticalStackLayout Spacing="12">
                                 <Label Text="Select Date" Style="{StaticResource LabelCaption}"
                                        SemanticProperties.HeadingLevel="Level2" />
@@ -31,9 +32,11 @@
                             </VerticalStackLayout>
                         </Frame>
 
-                        <Button Text="+ Add Recipe to Plan"
+                        <Button Text="&#x2795; Add Recipe to Plan"
                                 Command="{Binding ShowAddRecipePickerCommand}"
                                 Style="{StaticResource ButtonOutline}"
+                                FontSize="15"
+                                HeightRequest="50"
                                 SemanticProperties.Description="Add a recipe to meal plan"
                                 SemanticProperties.Hint="Tap to browse recipes and add to this date" />
 
@@ -42,9 +45,9 @@
                                         SemanticProperties.Description="Meals planned for selected date">
                             <CollectionView.ItemTemplate>
                                 <DataTemplate x:DataType="models:MealPlan">
-                                    <Frame Margin="0,4" Padding="12" CornerRadius="12"
+                                    <Frame Margin="0,4" Padding="14" CornerRadius="16"
                                            BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundLight}, Dark={StaticResource CardBackgroundDark}}"
-                                           BorderColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}"
+                                           BorderColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray600}}"
                                            HasShadow="True">
                                         <Frame.GestureRecognizers>
                                             <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MealPlanViewModel}}, Path=GoToRecipeDetailCommand}"
@@ -53,13 +56,14 @@
                                         <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto"
                                               VerticalOptions="Center">
                                             <Frame Grid.Column="0"
-                                                   CornerRadius="8"
+                                                   CornerRadius="10"
                                                    BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
-                                                   Padding="12,6"
+                                                   Padding="14,8"
                                                    HasShadow="False"
+                                                   BorderColor="Transparent"
                                                    HorizontalOptions="Start">
                                                 <Label Text="{Binding MealType}"
-                                                       FontSize="14"
+                                                       FontSize="13"
                                                        FontAttributes="Bold"
                                                        TextColor="White"
                                                        VerticalOptions="Center"
@@ -68,7 +72,8 @@
                                             <Label Grid.Column="1"
                                                     Text="{Binding RecipeTitle}"
                                                     FontSize="16"
-                                                    Margin="12,0,0,0"
+                                                    FontAttributes="Bold"
+                                                    Margin="14,0,0,0"
                                                     TextColor="{AppThemeBinding Light={StaticResource TextPrimary}, Dark={StaticResource TextSecondary}}"
                                                     VerticalOptions="Center"
                                                     LineBreakMode="TailTruncation" />
@@ -89,12 +94,20 @@
                             </CollectionView.ItemTemplate>
                         </CollectionView>
 
-                        <Label Text="No meals planned for this date."
-                               IsVisible="{Binding IsEmpty}"
-                               HorizontalOptions="Center"
-                               Style="{StaticResource LabelBody}"
-                               Margin="0,32,0,0"
-                               SemanticProperties.Description="No meals planned" />
+                        <VerticalStackLayout IsVisible="{Binding IsEmpty}"
+                                             HorizontalOptions="Center"
+                                             Spacing="12"
+                                             Margin="0,32,0,0">
+                            <Label Text="&#x1F37D;&#xFE0F;"
+                                   FontSize="40"
+                                   HorizontalOptions="Center" />
+                            <Label Text="No meals planned for this date."
+                                   IsVisible="{Binding IsEmpty}"
+                                   HorizontalOptions="Center"
+                                   Style="{StaticResource LabelBody}"
+                                   HorizontalTextAlignment="Center"
+                                   SemanticProperties.Description="No meals planned" />
+                        </VerticalStackLayout>
 
                     </VerticalStackLayout>
                 </ScrollView>
@@ -109,46 +122,59 @@
                                Margin="0,8" />
         </Grid>
 
-        <AbsoluteLayout IsVisible="{Binding IsRecipePickerVisible}"
-                        BackgroundColor="#80000000"
-                        AbsoluteLayout.LayoutBounds="0,0,1,1"
-                        AbsoluteLayout.LayoutFlags="All">
-            <Frame AbsoluteLayout.LayoutBounds="0.5,0.5,0.9,0.8"
-                   AbsoluteLayout.LayoutFlags="All"
+        <Grid IsVisible="{Binding IsRecipePickerVisible}"
+              BackgroundColor="#C0000000"
+              Padding="24"
+              RowDefinitions="*,Auto,*">
+            <Frame Grid.Row="1"
                    Style="{StaticResource CardFrame}"
+                   MaximumWidthRequest="400"
+                   HorizontalOptions="Center"
                    BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}">
-                <Grid RowDefinitions="Auto,Auto,Auto,Auto" Padding="8" RowSpacing="16">
-                    <Label Grid.Row="0" Text="Add Recipe to Meal Plan"
+                <Grid RowDefinitions="Auto,Auto,Auto,Auto" Padding="12" RowSpacing="16">
+                    <Label Grid.Row="0" Text="&#x1F372; Add Recipe to Meal Plan"
                            Style="{StaticResource LabelTitle}"
+                           FontSize="20"
+                           HorizontalOptions="Center"
                            SemanticProperties.HeadingLevel="Level2" />
 
-                    <Picker Grid.Row="1"
-                            Title="Meal Type"
-                            ItemsSource="{Binding MealTypes}"
-                            SelectedItem="{Binding SelectedMealType}"
-                            SemanticProperties.Description="Select meal type"
-                            SemanticProperties.Hint="Choose breakfast, lunch, dinner, or snack" />
+                    <Frame Grid.Row="1"
+                           Style="{StaticResource CardFrameFlat}"
+                           Padding="12"
+                           CornerRadius="12">
+                        <Picker Title="Meal Type"
+                                ItemsSource="{Binding MealTypes}"
+                                SelectedItem="{Binding SelectedMealType}"
+                                SemanticProperties.Description="Select meal type"
+                                SemanticProperties.Hint="Choose breakfast, lunch, dinner, or snack" />
+                    </Frame>
 
-                    <Picker Grid.Row="2"
-                            Title="Select Recipe"
-                            ItemsSource="{Binding AvailableRecipes}"
-                            ItemDisplayBinding="{Binding Title}"
-                            SelectedItem="{Binding SelectedRecipe}"
-                            SemanticProperties.Description="Select a recipe"
-                            SemanticProperties.Hint="Choose a recipe to add to your meal plan" />
+                    <Frame Grid.Row="2"
+                           Style="{StaticResource CardFrameFlat}"
+                           Padding="12"
+                           CornerRadius="12">
+                        <Picker Title="Select Recipe"
+                                ItemsSource="{Binding AvailableRecipes}"
+                                ItemDisplayBinding="{Binding Title}"
+                                SelectedItem="{Binding SelectedRecipe}"
+                                SemanticProperties.Description="Select a recipe"
+                                SemanticProperties.Hint="Choose a recipe to add to your meal plan" />
+                    </Frame>
 
                     <HorizontalStackLayout Grid.Row="3" HorizontalOptions="Center" Spacing="16">
                         <Button Text="Cancel"
                                 Command="{Binding CancelRecipePickerCommand}"
-                                Style="{StaticResource ButtonSecondary}"
+                                Style="{StaticResource ButtonOutline}"
+                                MinimumWidthRequest="120"
                                 SemanticProperties.Hint="Cancel adding recipe" />
-                        <Button Text="Add"
+                        <Button Text="&#x2714; Add"
                                 Command="{Binding AddSelectedRecipeCommand}"
+                                MinimumWidthRequest="120"
                                 SemanticProperties.Hint="Confirm and add recipe to meal plan" />
                     </HorizontalStackLayout>
                 </Grid>
             </Frame>
-        </AbsoluteLayout>
+        </Grid>
     </Grid>
 
 </ContentPage>
