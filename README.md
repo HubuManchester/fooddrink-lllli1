@@ -42,7 +42,7 @@ FoodLens is a cross-platform mobile application built with **.NET 9 MAUI** that 
 | **Location** | Geolocation | Get your current location and view it on an embedded map |
 | | Reverse Geocoding | Display your street address using OpenStreetMap Nominatim |
 | **UX** | Dark Mode | Full light/dark theme support with automatic system detection |
-| | Responsive Layout | Adaptive grid — single column on phone, double column on tablet/desktop |
+| | Responsive Layout | Orientation-aware adaptive grid — switches between single/double column on tablet rotation |
 | | Pull-to-Refresh | Refresh content on all listing pages |
 | **Auth** | Login / Register | Local user accounts with SHA-256 password hashing |
 
@@ -121,7 +121,7 @@ FoodLens/
 │   └── RatingStarView.xaml         # 5-star rating display
 │
 ├── Helpers/                        # Utilities
-│   ├── PlatformHelper.cs           # IsTabletOrDesktop detection
+│   ├── PlatformHelper.cs           # Orientation-aware layout detection (IsWideLayout + LayoutChanged event)
 │   └── Converters/                 # XAML value converters
 │       ├── StringNotEmptyConverter.cs
 │       ├── StringEmptyConverter.cs
@@ -308,7 +308,7 @@ FoodLens targets **WCAG 2.0 AA** compliance:
 - **Spacing scale**: 8 / 12 / 16 / 24px
 - **Font sizes**: 12 / 14 / 16 / 20 / 24 / 32 / 40px
 - **Card style**: Rounded frames with shadow, gradient placeholders for missing images
-- **Responsive**: Single column on phone, 2-column grid on tablet/desktop (`PlatformHelper.IsTabletOrDesktop`)
+- **Responsive**: Orientation-aware layout — single column in portrait, 2-column grid in landscape on tablets; always 2-column on Windows desktop (`PlatformHelper.IsWideLayout` + `DeviceDisplay.MainDisplayInfoChanged`)
 
 ---
 

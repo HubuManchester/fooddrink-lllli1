@@ -1,13 +1,9 @@
-﻿namespace FoodLens;
+﻿using FoodLens.Helpers;
 
-/// <summary>
-/// Main application entry point. Configures global exception handling and creates the main window.
-/// </summary>
+namespace FoodLens;
+
 public partial class App : Application
 {
-    /// <summary>
-    /// Initializes the application, registers global exception handlers.
-    /// </summary>
     public App()
     {
         InitializeComponent();
@@ -15,27 +11,24 @@ public partial class App : Application
         TaskScheduler.UnobservedTaskException += OnUnobservedTaskException;
     }
 
-    /// <summary>
-    /// Creates the main application window with the AppShell as the root page.
-    /// </summary>
-    /// <param name="activationState">The activation state from the platform.</param>
-    /// <returns>A new Window instance.</returns>
     protected override Window CreateWindow(IActivationState? activationState)
     {
-        return new Window(new AppShell());
+        PlatformHelper.StartMonitoring();
+        var window = new Window(new AppShell());
+        window.Destroying += OnWindowDestroying;
+        return window;
     }
 
-    /// <summary>
-    /// Handles unhandled exceptions from the AppDomain.
-    /// </summary>
+    private void OnWindowDestroying(object? sender, EventArgs e)
+    {
+        PlatformHelper.StopMonitoring();
+    }
+
     private static void OnUnhandledException(object sender, UnhandledExceptionEventArgs e)
     {
         System.Diagnostics.Debug.WriteLine($"[FoodLens] UnhandledException: {e.ExceptionObject}");
     }
 
-    /// <summary>
-    /// Handles unobserved task exceptions to prevent application crashes.
-    /// </summary>
     private static void OnUnobservedTaskException(object? sender, UnobservedTaskExceptionEventArgs e)
     {
         System.Diagnostics.Debug.WriteLine($"[FoodLens] UnobservedTaskException: {e.Exception}");

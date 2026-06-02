@@ -3,9 +3,6 @@ using FoodLens.ViewModels;
 
 namespace FoodLens.Views;
 
-/// <summary>
-/// Represents the home page displaying featured recipes with platform-specific layout adjustments.
-/// </summary>
 public partial class HomePage : ContentPage
 {
     private readonly HomePageViewModel _viewModel;
@@ -17,31 +14,52 @@ public partial class HomePage : ContentPage
         BindingContext = viewModel;
         _viewModel = viewModel;
 
-        if (PlatformHelper.IsTabletOrDesktop)
-        {
-            FeaturedRecipesCollectionView.ItemsLayout = new GridItemsLayout(2, ItemsLayoutOrientation.Vertical)
+        ApplyLayout(PlatformHelper.IsWideLayout);
+        PlatformHelper.LayoutChanged += OnLayoutChanged;
+    }
+
+    private void OnLayoutChanged(object? sender, LayoutModeChangedEventArgs e)
+    {
+        ApplyLayout(e.IsWideLayout);
+    }
+
+    private void ApplyLayout(bool wide)
+    {
+        FeaturedRecipesCollectionView.ItemsLayout = wide
+            ? new GridItemsLayout(2, ItemsLayoutOrientation.Vertical)
             {
                 HorizontalItemSpacing = 4,
                 VerticalItemSpacing = 4
+            }
+            : new LinearItemsLayout(ItemsLayoutOrientation.Vertical)
+            {
+                ItemSpacing = 4
             };
-        }
     }
 
-    protected override async void OnNavigatedTo(NavigatedToEventArgs args)
+    protected override void OnNavigatingFrom(NavigatingFromEventArgs args)
+    {
+        base.OnNavigatingFrom(args);
+        PlatformHelper.LayoutChanged -= OnLayoutChanged;
+    }
+
+    protected override void OnNavigatedTo(NavigatedToEventArgs args)
     {
         base.OnNavigatedTo(args);
+        PlatformHelper.LayoutChanged -= OnLayoutChanged;
+        PlatformHelper.LayoutChanged += OnLayoutChanged;
 
         if (!_splashPlayed)
         {
             _splashPlayed = true;
-            await PlaySplashAsync();
+            PlaySplashAsync();
         }
 
-        try { await _viewModel.LoadRecipesCommand.ExecuteAsync(null); }
+        try { _viewModel.LoadRecipesCommand.ExecuteAsync(null); }
         catch (Exception ex) { System.Diagnostics.Debug.WriteLine($"[FoodLens] HomePage.OnNavigatedTo: {ex.Message}"); }
     }
 
-    private async Task PlaySplashAsync()
+    private async void PlaySplashAsync()
     {
         SplashOverlay.IsVisible = true;
         SplashOverlay.Opacity = 1;
